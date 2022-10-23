@@ -1,4 +1,7 @@
+using System;
+using System.Diagnostics;
 using JetBrains.Annotations;
+using TMPro;
 using UnityEngine;
 
 // ReSharper disable FieldCanBeMadeReadOnly.Local
@@ -19,8 +22,7 @@ public class Driver : MonoBehaviour
 
     void Start()
     {
-
-    }
+        }
 
     void Update()
     {
