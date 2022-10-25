@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1df9a0bb948e2b147b89f34325df854e, type: 3}
-  m_Name: Q2
+  m_Name: Q9
   m_EditorClassIdentifier: 
-  _question: "Early in the war, in his first address to the British House of Commons,
-    Prime Minister Winston Churchill said, \u201CI have nothing to offer but\u2026\u201D"
+  _question: "Which of these best describes blitzkrieg, which was key to Germany\u2019s
+    early success in the war?"
   _answers:
-  - '"A swift end to tyranny"'
-  - '"Peach in our time"'
-  - '"An appeal to human decency"'
-  - '"Blood, toil, tears and sweat"'
+  - Economic sanctions
+  - High-level espionage
+  - Propaganda
+  - Quick coordinated attacks
   _correctAnswerIndex: 3

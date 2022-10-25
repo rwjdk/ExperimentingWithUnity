@@ -1,27 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 
-[CreateAssetMenu(menuName ="Quiz Question", fileName = "New Question")]
-[UsedImplicitly]
-public class QuestionScriptObject : ScriptableObject
+// ReSharper disable FieldCanBeMadeReadOnly.Local
+
+namespace Assets.Scripts
 {
-    [SerializeField]
-    [TextArea(2,6)]
-    private string _question = "Enter new question Text Here";
+    [CreateAssetMenu(menuName = "Quiz Question", fileName = "New Question")]
+    [UsedImplicitly]
+    public class QuestionScriptObject : ScriptableObject
+    {
+        [SerializeField]
+        [TextArea(2, 6)]
+        private string _question = "Enter new question Text Here";
 
-    public string Question => _question;
+        [SerializeField] 
+        private string[] _answers = new string[4];
+    
+        [SerializeField]
+        [Range(0,3)]
+        private int _correctAnswerIndex = 0;
 
-    [SerializeField]
-    private string _answer1 = "Answer 1";
+        public string Question => _question;
 
-    [SerializeField]
-    private string _answer2 = "Answer 2";
+        public string[] Answers => _answers;
 
-    [SerializeField]
-    private string _answer3 = "Answer 3";
-
-    [SerializeField]
-    private string _answer4 = "Answer 4";
+        public int CorrectAnswerIndex => _correctAnswerIndex;
+    }
 }

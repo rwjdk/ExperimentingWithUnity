@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _question: "Anticipating security needs after the war, the United States\u2019
     Operation Paperclip sought to do what?"
-  _answer1: Rebuild Germany
-  _answer2: Prevent the spread of communism
-  _answer3: Distribut aid to Jewish refugees
-  _answer4: Recruit Nazi scientists
+  _answers:
+  - Rebuild Germany
+  - Prevent the spread of communism
+  - Distribut aid to Jewish refugees
+  - Recruit Nazi scientists
+  _correctAnswerIndex: 3

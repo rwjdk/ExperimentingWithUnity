@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _question: Which country suffered the most military deaths, by far, during World
     War II?
-  _answer1: Germany
-  _answer2: Soviet Union
-  _answer3: France
-  _answer4: United States
+  _answers:
+  - Germany
+  - Soviet Union
+  - France
+  - United States
+  _correctAnswerIndex: 1

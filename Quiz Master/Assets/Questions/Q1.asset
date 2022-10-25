@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _question: Referring to a desperate maneuver used to sink Allied ships, kamikaze
     literally means what?
-  _answer1: Iceberg
-  _answer2: Hungry shark
-  _answer3: Floating mine
-  _answer4: Divine wind
+  _answers:
+  - Iceberg
+  - Hungry shark
+  - Floating mine
+  - Divine wind
+  _correctAnswerIndex: 3

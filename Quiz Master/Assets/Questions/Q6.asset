@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1df9a0bb948e2b147b89f34325df854e, type: 3}
-  m_Name: Q2
+  m_Name: Q6
   m_EditorClassIdentifier: 
-  _question: "Early in the war, in his first address to the British House of Commons,
-    Prime Minister Winston Churchill said, \u201CI have nothing to offer but\u2026\u201D"
+  _question: "A precursor to Nazi extermination camps, the \u201CHolocaust by bullets\u201D
+    happened during which of these events?"
   _answers:
-  - '"A swift end to tyranny"'
-  - '"Peach in our time"'
-  - '"An appeal to human decency"'
-  - '"Blood, toil, tears and sweat"'
-  _correctAnswerIndex: 3
+  - "Germany\u2019s invasion of the U.S.S.R."
+  - "Germany\u2019s participation in the Spanish Civil War"
+  - "Germany\u2019s occupation of France"
+  - "Germany\u2019s conclusion of an alliance with Italy"
+  _correctAnswerIndex: 0

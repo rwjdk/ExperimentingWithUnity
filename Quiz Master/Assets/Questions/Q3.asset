@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _question: "The German military operation code-named Walk\xFCre (\u201CValkyrie\u201D)
     hoped to assassinate which leader?"
-  _answer1: Frankline Roosevelt
-  _answer2: Adolf Hitler
-  _answer3: Winston Churchill
-  _answer4: Benito Mussolini
+  _answers:
+  - Frankline Roosevelt
+  - Adolf Hitler
+  - Winston Churchill
+  - Benito Mussolini
+  _correctAnswerIndex: 1
