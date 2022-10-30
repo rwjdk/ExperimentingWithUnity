@@ -1,14 +1,9 @@
 using System;
 using System.Diagnostics;
-using Assets;
-using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-// ReSharper disable FieldCanBeMadeReadOnly.Local
-
-[UsedImplicitly]
 public class Delivery : MonoBehaviour
 {
     private TextMeshProUGUI _timer;
@@ -16,14 +11,12 @@ public class Delivery : MonoBehaviour
 
     private bool _hasPackage;
 
-    [SerializeField] private GameObject _car;
-    [SerializeField] private GameObject _carPackage;
+    [SerializeField] GameObject _car;
+    [SerializeField] GameObject _carPackage;
 
     private SpriteRenderer _spriteRenderer;
-    private Color32 _noPackageColor = Color.white;
-    private Color32 _hasPackageColor = Color.green;
+    private readonly Color32 _noPackageColor = Color.white;
 
-    [UsedImplicitly]
     void Start()
     {
         GameObject finishText = GameObject.FindGameObjectWithTag("FinishText");
@@ -45,7 +38,6 @@ public class Delivery : MonoBehaviour
         _timer.text = Math.Round(_stopWatch.Elapsed.TotalSeconds, 0) + " Seconds";
     }
 
-    [UsedImplicitly]
     private void OnCollisionEnter2D(Collision2D other)
     {
         _car.GetComponent<Driver>().IsBoosted = false;
@@ -53,62 +45,49 @@ public class Delivery : MonoBehaviour
     }
 
     
-    [UsedImplicitly]
     private void OnTriggerEnter2D(Collider2D other)
     {
-        switch (other.tag)
+        if (other.CompareTag(Tags.Package))
         {
-            case Tags.Package:
-                if (!_hasPackage)
-                {
-                    PickUp(other);
-                }
-                else
-                {
-                    Debug.Log("You already have a package... Deliver that first");
-                }
-                
-                break;
-            case Tags.Customer:
-                if (_hasPackage)
-                {
-                    Deliver();
-                }
-                else
-                {
-                    Debug.Log("You need to pick up a package first");
-                }
-                break;
-            case Tags.Booster:
-                _car.GetComponent<Driver>().IsBoosted = true;
-                Destroy(other.gameObject);
-                break;
+            if (!_hasPackage)
+            {
+                PickUp(other);
+            }
+            else
+            {
+                Debug.Log("You already have a package... Deliver that first");
+            }
         }
-
-        
+        else if (other.CompareTag(Tags.Customer))
+        {
+            if (_hasPackage)
+            {
+                Deliver();
+            }
+            else
+            {
+                Debug.Log("You need to pick up a package first");
+            }
+        }
+        else if (other.CompareTag(Tags.Booster))
+        {
+            _car.GetComponent<Driver>().IsBoosted = true;
+            Destroy(other.gameObject);
+        }
     }
 
     private void PickUp(Collider2D other)
     {
         Debug.Log("You picked up a package");
         _hasPackage = true;
-        ChangeColor(_hasPackageColor);
         Destroy(other.gameObject);
         ShowBoxInCar(true);
-    }
-
-    private void ChangeColor(Color32 newColor)
-    {
-        /*
-        _spriteRenderer.color = newColor;
-        */
     }
 
     private void Deliver()
     {
         Debug.Log("You delivered a package");
         _hasPackage = false;
-        ChangeColor(_noPackageColor);
         ShowBoxInCar(false);
         ShowHideThankYou(true);
         Invoke(nameof(HideThankYouOnDelay), 3);

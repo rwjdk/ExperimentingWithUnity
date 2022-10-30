@@ -1,5 +1,4 @@
 using System;
-using Assets.Scripts;
 using Assets.Scripts.Model;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -7,8 +6,8 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-    private float _timeToGuess = 30f;
-    private float _timeToShowCorrectAnswer = 5f;
+    private readonly float _timeToGuess = 30f;
+    private readonly float _timeToShowCorrectAnswer = 5f;
     private float _timerValue;
     private QuizState _state;
     [SerializeField] private GameObject _timerGui;
@@ -75,7 +74,7 @@ public class Timer : MonoBehaviour
                     _timerValue = _timeToGuess;
                     _state = QuizState.Guessing;
                     _quiz.GetNextQuestion();
-                    IsComplete = _progressbar.value == _progressbar.maxValue;
+                    IsComplete = Math.Abs(_progressbar.value - _progressbar.maxValue) < 0.001;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
