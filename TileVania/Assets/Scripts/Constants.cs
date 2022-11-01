@@ -3,6 +3,8 @@
     public struct Tags
     {
         public const string Enemy = "Enemy";
+        public const string Bullet = "Bullet";
+        public const string Finish = "Finish";
     }
 
     public struct AnimatorParameters
@@ -19,7 +21,9 @@
     public struct Layers
     {
         public const string Ground = "Ground";
-        public static string Ladder = "Ladder";
-        public static string Enemy = "Enemy";
+        public const string Ladder = "Ladder";
+        public const string Enemy = "Enemy";
+        public const string Hazard = "Hazard";
+        public const string Water = "Water";
     }
 }

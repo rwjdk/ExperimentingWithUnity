@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - Background
   - Bounce
   - Enemy
-  - 
-  - 
+  - Hazard
+  - Bullet
   - 
   - 
   - 
@@ -56,6 +57,9 @@ TagManager:
     locked: 0
   - name: Bounce
     uniqueID: 374053255
+    locked: 0
+  - name: Hazard
+    uniqueID: 2550869079
     locked: 0
   - name: Enemy
     uniqueID: 233724055

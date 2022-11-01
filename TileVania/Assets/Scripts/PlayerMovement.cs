@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,9 +18,14 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D _feetCollider;
     private float _normalGravity;
     private bool _isAlive = true;
+    [SerializeField] private GameObject _bullet;
+    [SerializeField] private Transform _bulletOrigin;
+    [SerializeField] private Scene _nextLevel;
+    private int _curentSceneIndex;
 
     void Start()
     {
+        _curentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         _rigidBody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _capsuleCollider = GetComponent<CapsuleCollider2D>();
@@ -89,21 +95,57 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    [UsedImplicitly]
+    private void OnFire(InputValue value)
+    {
+        if (!_isAlive) { return; }
+        Instantiate(_bullet, _bulletOrigin.position, _bulletOrigin.rotation);
+    }
+
     private void Run()
     {
         Vector2 playerVelocity = new Vector2(_moveInput.x * _speed, _rigidBody.velocity.y);
         _rigidBody.velocity = playerVelocity;
         _animator.SetBool(Constants.AnimatorParameters.IsRunning, PlayerHasHorizontalSpeed());
-
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (_isAlive && _rigidBody.IsTouchingLayers(LayerMask.GetMask(Constants.Layers.Enemy)))
+        if (_isAlive && _rigidBody.IsTouchingLayers(LayerMask.GetMask(Constants.Layers.Enemy, Constants.Layers.Hazard, Constants.Layers.Water)))
         {
-            _isAlive = false;
-            _animator.SetTrigger(Constants.AnimatorTrigger.Dying);
-            _rigidBody.velocity += new Vector2(10f, 10f);
+            Die();
+        }
+        else if (_isAlive && other.CompareTag(Constants.Tags.Finish))
+        {
+            StartCoroutine(NextLevel());
+        }
+    }
+
+    private void Die()
+    {
+        _isAlive = false;
+        _animator.SetTrigger(Constants.AnimatorTrigger.Dying);
+        _rigidBody.velocity += new Vector2(10f, 10f);
+        StartCoroutine(ReloadLevel(3));
+    }
+
+    private IEnumerator ReloadLevel(int delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        SceneManager.LoadScene(_curentSceneIndex);
+    }
+
+    IEnumerator NextLevel()
+    {
+        yield return new WaitForSecondsRealtime(1);
+        _curentSceneIndex++;
+        if (_curentSceneIndex == SceneManager.sceneCountInBuildSettings) //todo -check if buildindex is off by one
+        {
+            //todo - done
+        }
+        else
+        {
+            SceneManager.LoadScene(_curentSceneIndex);
         }
     }
 }
