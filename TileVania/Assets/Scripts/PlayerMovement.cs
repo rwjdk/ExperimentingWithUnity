@@ -39,12 +39,14 @@ public class PlayerMovement : MonoBehaviour
             Vector2 playerVelocity = new Vector2(_rigidBody.velocity.x, _moveInput.y * _speed);
             _rigidBody.velocity = playerVelocity;
             _rigidBody.gravityScale = 0;
+            _animator.SetBool(Constants.AnimatorParameters.IsClimbing, PlayerHasVerticalSpeed());
         }
         else
         {
             _rigidBody.gravityScale = _normalGravity;
+            _animator.SetBool(Constants.AnimatorParameters.IsClimbing, false);
         }
-        _animator.SetBool(Constants.AnimatorParameters.IsClimbing, PlayerHasVerticalSpeed());
+        
     }
 
     private void FlipSprite()
