@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -12,20 +13,23 @@ public class PlayerMovement : MonoBehaviour
     private Animator _animator;
     [SerializeField] private float _speed = 4;
     [SerializeField] private float _jumpHeight = 8;
-    [SerializeField] private float _climbSpeed = 4;
-    private CapsuleCollider2D _collider;
+    private CapsuleCollider2D _capsuleCollider;
+    private BoxCollider2D _feetCollider;
     private float _normalGravity;
+    private bool _isAlive = true;
 
     void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
-        _collider = GetComponent<CapsuleCollider2D>();
+        _capsuleCollider = GetComponent<CapsuleCollider2D>();
+        _feetCollider = GetComponent<BoxCollider2D>();
         _normalGravity = _rigidBody.gravityScale;
     }
 
     void Update()
     {
+        if (!_isAlive) {  return; }
         Run();
         FlipSprite();
         ClimbLadder();
@@ -34,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     private void ClimbLadder()
     {
         var layerMaskId = LayerMask.GetMask(Constants.Layers.Ladder);
-        if (_collider.IsTouchingLayers(layerMaskId))
+        if (_capsuleCollider.IsTouchingLayers(layerMaskId))
         {
             Vector2 playerVelocity = new Vector2(_rigidBody.velocity.x, _moveInput.y * _speed);
             _rigidBody.velocity = playerVelocity;
@@ -70,14 +74,16 @@ public class PlayerMovement : MonoBehaviour
     [UsedImplicitly]
     private void OnMove(InputValue value)
     {
+        if (!_isAlive) { return; }
         _moveInput = value.Get<Vector2>();
     }
 
     [UsedImplicitly]
     private void OnJump(InputValue value)
     {
+        if (!_isAlive) { return; }
         var layerMaskId = LayerMask.GetMask(Constants.Layers.Ground);
-        if (_collider.IsTouchingLayers(layerMaskId))
+        if (_feetCollider.IsTouchingLayers(layerMaskId))
         {
             _rigidBody.velocity += new Vector2(0f, _jumpHeight);
         }
@@ -91,4 +97,13 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (_isAlive && _rigidBody.IsTouchingLayers(LayerMask.GetMask(Constants.Layers.Enemy)))
+        {
+            _isAlive = false;
+            _animator.SetTrigger(Constants.AnimatorTrigger.Dying);
+            _rigidBody.velocity += new Vector2(10f, 10f);
+        }
+    }
 }

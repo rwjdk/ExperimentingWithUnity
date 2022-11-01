@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Player
   - Background
   - Bounce
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -55,6 +56,9 @@ TagManager:
     locked: 0
   - name: Bounce
     uniqueID: 374053255
+    locked: 0
+  - name: Enemy
+    uniqueID: 233724055
     locked: 0
   - name: Player
     uniqueID: 1924035323
