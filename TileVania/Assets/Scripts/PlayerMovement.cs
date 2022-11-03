@@ -127,12 +127,13 @@ public class PlayerMovement : MonoBehaviour
         _animator.SetTrigger(Constants.AnimatorTrigger.Dying);
         _rigidBody.velocity += new Vector2(10f, 10f);
         StartCoroutine(ReloadLevel(3));
+
     }
 
     private IEnumerator ReloadLevel(int delay)
     {
         yield return new WaitForSecondsRealtime(delay);
-        SceneManager.LoadScene(_curentSceneIndex);
+        FindObjectOfType<GameSession>().ProcessPlayerDeath();
     }
 
     IEnumerator NextLevel()
