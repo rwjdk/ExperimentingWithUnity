@@ -1,47 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameSession : MonoBehaviour
 {
-    private const int MaxLives = 10;
-    [SerializeField] private int _playerLives = MaxLives;
+    [SerializeField] private TextMeshProUGUI _statusText;
+    [SerializeField] private TextMeshProUGUI _coinText;
 
-    private void Awake()
+    void Update()
     {
-        int numGamesSessions = FindObjectsOfType<GameSession>().Length;
-        if (numGamesSessions > 1)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            DontDestroyOnLoad(gameObject);
-        }
+        SetStatus();
     }
 
-    public void ProcessPlayerDeath()
+    private void SetStatus()
     {
-        if (_playerLives > 1)
-        {
-            TakeLife();
-        }
-        else
-        {
-            ResetGameSession();
-        }
-    }
-
-    private void ResetGameSession()
-    {
-        _playerLives = MaxLives;
-        SceneManager.LoadScene(0);
-    }
-
-    private void TakeLife()
-    {
-        _playerLives--;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        _statusText.text = $"{OverallGameState.PlayerLives} Lives";
+        var coinsLeft = GameObject.FindGameObjectsWithTag(Constants.Tags.Coin)?.Length ?? 0;
+        _coinText.text = coinsLeft == 0 ? "All Coins found. Now find the Exit!" : $"Find {coinsLeft} more coins before you can exit";
     }
 }

@@ -5,6 +5,7 @@
         public const string Enemy = "Enemy";
         public const string Bullet = "Bullet";
         public const string Finish = "Finish";
+        public const string Coin = "Coin";
     }
 
     public struct AnimatorParameters

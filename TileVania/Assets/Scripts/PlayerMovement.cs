@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,7 +22,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject _bullet;
     [SerializeField] private Transform _bulletOrigin;
     [SerializeField] private Scene _nextLevel;
+    [SerializeField] private AudioClip _audioClip;
+    [SerializeField] private TextMeshProUGUI _youWon;
     private int _curentSceneIndex;
+    private bool _gameOver;
 
     void Start()
     {
@@ -117,8 +121,26 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (_isAlive && other.CompareTag(Constants.Tags.Finish))
         {
-            StartCoroutine(NextLevel());
+            if (GameObject.FindGameObjectsWithTag(Constants.Tags.Coin).Length == 0)
+            {
+                if (_gameOver)
+                {
+                    return;
+                }
+                StartCoroutine(NextLevel());
+            }
         }
+        else if (_isAlive && other.CompareTag(Constants.Tags.Coin))
+        {
+            PickUpCoin(other);
+        }
+    }
+
+    private void PickUpCoin(Collider2D other)
+    {
+        var otherGameObject = other.gameObject;
+        AudioSource.PlayClipAtPoint(_audioClip, Camera.current.velocity);
+        Destroy(otherGameObject);
     }
 
     private void Die()
@@ -133,16 +155,18 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator ReloadLevel(int delay)
     {
         yield return new WaitForSecondsRealtime(delay);
-        FindObjectOfType<GameSession>().ProcessPlayerDeath();
+        OverallGameState.ProcessPlayerDeath();
     }
 
     IEnumerator NextLevel()
     {
         yield return new WaitForSecondsRealtime(1);
         _curentSceneIndex++;
+
         if (_curentSceneIndex == SceneManager.sceneCountInBuildSettings) //todo -check if buildindex is off by one
         {
-            //todo - done
+            _gameOver = true;
+            _youWon.gameObject.SetActive(true);
         }
         else
         {

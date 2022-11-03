@@ -20,7 +20,10 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        _moveSpeed = -_moveSpeed;
-        transform.localScale = new Vector2(-Mathf.Sign(_rigidbody.velocity.x), 1f);
+        if (!col.CompareTag(Constants.Tags.Coin))
+        {
+            _moveSpeed = -_moveSpeed;
+            transform.localScale = new Vector2(-Mathf.Sign(_rigidbody.velocity.x), 1f);
+        }
     }
 }
