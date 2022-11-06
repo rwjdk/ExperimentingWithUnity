@@ -16,6 +16,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float paddingRight;
     [SerializeField] private float paddingTop;
     [SerializeField] private float paddingBottom;
+    private Shooter _shooter;
+
+    private void Awake()
+    {
+        _shooter = GetComponent<Shooter>();
+    }
 
     private void Start()
     {
@@ -38,8 +44,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void DoMovement()
     {
-        
-
         var delta = _rawInput * (_moveSpeed * Time.deltaTime);
         var newPosition = new Vector2();
         var currentPosition = transform.position;
@@ -53,4 +57,12 @@ public class PlayerMovement : MonoBehaviour
     {
         _rawInput = input.Get<Vector2>();
     }
+    
+    [UsedImplicitly]
+    void OnFire(InputValue input)
+    {
+        _shooter.isFireing = input.isPressed;
+    }
+
+
 }
