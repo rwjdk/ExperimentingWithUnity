@@ -21,6 +21,12 @@ public class Shooter : MonoBehaviour
     public bool isFireing;
 
     private Coroutine _fireringCoroutine;
+    private AudioPlayer _audioPlayer;
+
+    private void Awake()
+    {
+        _audioPlayer = FindObjectOfType<AudioPlayer>();
+    }
 
     private void Start()
     {
@@ -58,7 +64,7 @@ public class Shooter : MonoBehaviour
 
             Destroy(instantiate, projectileLifeTime);
 
-            
+            _audioPlayer.PlayShootingClip();
 
             yield return new WaitForSeconds(GetRandomFireRate());
         }
