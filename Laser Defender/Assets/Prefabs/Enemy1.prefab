@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6409724298070384778}
   - component: {fileID: -2106628695362962697}
   m_Layer: 7
-  m_Name: Enemy
+  m_Name: Enemy1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: -703275115
   m_SortingLayer: 2
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: d5a9c11c7563a584281c6e26820a1bd7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b647739511e62a34bb865069bf87fca2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -151,10 +151,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b60954d3f3c13674ab68cbaba4da225d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 25
+  _health: 25
+  _scoreValue: 200
   _hitEffect: {fileID: 7324869014858948805, guid: c41cf48d73502d9429810a6cb49bb74a, type: 3}
   _hitEffectSmall: {fileID: 7324869014858948805, guid: 5293ce0716ce5ed43a7b8b38440d387e, type: 3}
   _applyCameraShake: 0
+  _isPlayer: 0
 --- !u!114 &6409724298070384778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,9 +183,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 7905105365334856036, guid: 81f2ee3c16486f142ae8d8dbbbdd42af, type: 3}
-  projectileSpeed: 3
+  projectileSpeed: 4
   projectileLifeTime: 10
-  fireRate: 2
+  fireRate: 1.5
   _isAi: 1
   _fireTimeVariance: 0.5
   _minimumFireTime: 0.1
