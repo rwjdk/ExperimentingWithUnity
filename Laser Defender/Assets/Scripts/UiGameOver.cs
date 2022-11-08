@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -14,7 +12,7 @@ public class UiGameOver : MonoBehaviour
         _scoreKeeper = FindObjectOfType<ScoreKeeper>();
     }
 
-    void Update()
+    private void Update()
     {
         _finalScoreText.text = $"You got {_scoreKeeper.Score} points.{Environment.NewLine}Nicely Done!";
     }

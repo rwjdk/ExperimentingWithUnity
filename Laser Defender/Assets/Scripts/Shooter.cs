@@ -1,27 +1,21 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 public class Shooter : MonoBehaviour
 {
-    [Header("General")]
-    [SerializeField] GameObject projectilePrefab;
-    [SerializeField] float projectileSpeed = 10f;
-    [SerializeField] float projectileLifeTime = 5f;
-    [SerializeField] private float fireRate = 02f;
-
-    [Header("AI")]
+    [SerializeField] private GameObject _projectilePrefab;
+    [SerializeField] private float _projectileSpeed = 10f;
+    [SerializeField] private float _projectileLifeTime = 5f;
+    [SerializeField] private float _fireRate = 02f;
     [SerializeField] private bool _isAi;
-    [SerializeField] float _fireTimeVariance = 0f;
-    [SerializeField] float _minimumFireTime = 0.1f;
+    [SerializeField] private float _fireTimeVariance;
+    [SerializeField] private float _minimumFireTime = 0.1f;
 
-    [HideInInspector]
-    public bool isFireing;
+    [HideInInspector] public bool isFireing;
+
+    private AudioPlayer _audioPlayer;
 
     private Coroutine _fireringCoroutine;
-    private AudioPlayer _audioPlayer;
 
     private void Awake()
     {
@@ -36,7 +30,7 @@ public class Shooter : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         Fire();
     }
@@ -58,11 +52,11 @@ public class Shooter : MonoBehaviour
     {
         while (true)
         {
-            var instantiate = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            var instantiate = Instantiate(_projectilePrefab, transform.position, Quaternion.identity);
             var instanceRigidBody = instantiate.GetComponent<Rigidbody2D>();
-            instanceRigidBody.velocity = transform.up * projectileSpeed;
+            instanceRigidBody.velocity = transform.up * _projectileSpeed;
 
-            Destroy(instantiate, projectileLifeTime);
+            Destroy(instantiate, _projectileLifeTime);
 
             _audioPlayer.PlayShootingClip();
 
@@ -72,7 +66,7 @@ public class Shooter : MonoBehaviour
 
     public float GetRandomFireRate()
     {
-        var timeToNexProjectile = Random.Range(fireRate - _fireTimeVariance, fireRate + _fireTimeVariance);
+        var timeToNexProjectile = Random.Range(_fireRate - _fireTimeVariance, _fireRate + _fireTimeVariance);
 
         return Mathf.Clamp(timeToNexProjectile, _minimumFireTime, float.MaxValue);
     }

@@ -11,7 +11,7 @@ public class UiDisplay : MonoBehaviour
     private Health _playerHealth;
     private ScoreKeeper _scorekeeper;
 
-    void Start()
+    private void Start()
     {
         _playerHealth = _player.GetComponent<Health>();
         _healthSlider.maxValue = _playerHealth.CurrentHealth;
@@ -19,7 +19,7 @@ public class UiDisplay : MonoBehaviour
         _scorekeeper = FindObjectOfType<ScoreKeeper>();
     }
 
-    void Update()
+    private void Update()
     {
         _healthSlider.value = _playerHealth.CurrentHealth;
         _scoreText.text = _scorekeeper.Score.ToString(CultureInfo.InvariantCulture).PadLeft(9, '0');

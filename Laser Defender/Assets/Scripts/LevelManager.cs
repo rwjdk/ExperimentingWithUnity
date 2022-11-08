@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,7 +9,7 @@ public class LevelManager : MonoBehaviour
         FindObjectOfType<ScoreKeeper>()?.ResetScore();
         SceneManager.LoadScene("Game");
     }
-    
+
     public void LoadMainMenu()
     {
         SceneManager.LoadScene("MainMenu");

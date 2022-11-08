@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 50
+  _scoreValue: 100
   _hitEffect: {fileID: 7324869014858948805, guid: c41cf48d73502d9429810a6cb49bb74a, type: 3}
   _hitEffectSmall: {fileID: 7324869014858948805, guid: 5293ce0716ce5ed43a7b8b38440d387e, type: 3}
   _applyCameraShake: 1
@@ -186,10 +187,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07cac14937b708847ba8af53d441e780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 7905105365334856036, guid: 1b9dd8a01733c1d4686b75bfa0b3cc8c, type: 3}
-  projectileSpeed: 10
-  projectileLifeTime: 5
-  fireRate: 0.2
+  _projectilePrefab: {fileID: 7905105365334856036, guid: 1b9dd8a01733c1d4686b75bfa0b3cc8c, type: 3}
+  _projectileSpeed: 10
+  _projectileLifeTime: 5
+  _fireRate: 0.2
   _isAi: 0
   _fireTimeVariance: 0
   _minimumFireTime: 0.1
@@ -206,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0320ab3c943482e4e8d9e4bb38777c80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paddingLeft: 0
-  paddingRight: 0
-  paddingTop: 2
-  paddingBottom: 1
+  _paddingLeft: 0
+  _paddingRight: 0
+  _paddingTop: 0
+  _paddingBottom: 0

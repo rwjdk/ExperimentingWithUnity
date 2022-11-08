@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77b13129f5c697e44b6e25c49c6aedef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 25
+  _damage: 10
 --- !u!114 &-2106628695362962697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,10 +182,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07cac14937b708847ba8af53d441e780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 7905105365334856036, guid: 81f2ee3c16486f142ae8d8dbbbdd42af, type: 3}
-  projectileSpeed: 4
-  projectileLifeTime: 10
-  fireRate: 1.5
+  _projectilePrefab: {fileID: 7905105365334856036, guid: 81f2ee3c16486f142ae8d8dbbbdd42af, type: 3}
+  _projectileSpeed: 4
+  _projectileLifeTime: 10
+  _fireRate: 1.5
   _isAi: 1
   _fireTimeVariance: 0.5
   _minimumFireTime: 0.1

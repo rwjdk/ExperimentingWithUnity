@@ -2,21 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using ScriptObjects;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private List<WaveConfig> _waves;
     [SerializeField] private float _timeBetweenWaves = 1f;
-    private WaveConfig _currentWave;
 
-    void Start()
+    public WaveConfig CurrentWave { get; private set; }
+
+    private void Start()
     {
-        _currentWave = _waves[0];
+        CurrentWave = _waves[0];
         StartCoroutine(SpawnEnemies());
     }
-
-    public WaveConfig CurrentWave => _currentWave;
 
     private IEnumerator SpawnEnemies()
     {
@@ -24,11 +22,11 @@ public class EnemySpawner : MonoBehaviour
         {
             foreach (var waveConfig in _waves)
             {
-                _currentWave = waveConfig;
-                for (int i = 0; i < CurrentWave.EnemyPrefabs.Count; i++)
+                CurrentWave = waveConfig;
+                for (var i = 0; i < CurrentWave.EnemyPrefabs.Count; i++)
                 {
                     CreateEnemy(i);
-                    yield return new WaitForSeconds(_currentWave.GetRandomSpawnTime());
+                    yield return new WaitForSeconds(CurrentWave.GetRandomSpawnTime());
                 }
 
                 yield return new WaitForSeconds(_timeBetweenWaves);
@@ -39,8 +37,8 @@ public class EnemySpawner : MonoBehaviour
     private void CreateEnemy(int i)
     {
         Instantiate(
-            _currentWave.EnemyPrefabs[i],
-            _currentWave.StartingWaypoints.position,
+            CurrentWave.EnemyPrefabs[i],
+            CurrentWave.StartingWaypoints.position,
             Quaternion.Euler(0, 0, 180),
             transform);
     }

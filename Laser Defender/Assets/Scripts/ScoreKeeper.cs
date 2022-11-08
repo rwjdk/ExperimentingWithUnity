@@ -1,13 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ScoreKeeper : MonoBehaviour
 {
-    private int _score;
-
-    public int Score => _score;
-
     private static ScoreKeeper _instance;
+
+    public int Score { get; private set; }
 
     private void Awake()
     {
@@ -19,19 +16,22 @@ public class ScoreKeeper : MonoBehaviour
         else
         {
             gameObject.SetActive(false);
-            Destroy(gameObject);
+            if (gameObject != null)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
 
     public void IncrementScore(int addedValue)
     {
-        _score += addedValue;
-        _score = Mathf.Clamp(_score, 0, int.MaxValue);
+        Score += addedValue;
+        Score = Mathf.Clamp(Score, 0, int.MaxValue);
     }
 
     public void ResetScore()
     {
-        _score = 0;
+        Score = 0;
     }
 }

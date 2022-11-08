@@ -1,5 +1,4 @@
 using UnityEngine;
-using Debug = System.Diagnostics.Debug;
 
 public class Health : MonoBehaviour
 {
@@ -9,18 +8,16 @@ public class Health : MonoBehaviour
     [SerializeField] private ParticleSystem _hitEffectSmall;
     [SerializeField] private bool _applyCameraShake;
     [SerializeField] private bool _isPlayer;
-
-    private CameraShake _cameraShake;
     private AudioPlayer _audioPlayer;
-    private ScoreKeeper _scoreKeeper;
+    private CameraShake _cameraShake;
     private LevelManager _levelManager;
+    private ScoreKeeper _scoreKeeper;
 
     public int CurrentHealth => _health;
 
     private void Awake()
     {
-        Debug.Assert(Camera.main != null, "Camera.main != null");
-        _cameraShake = Camera.main.GetComponent<CameraShake>();
+        _cameraShake = Camera.main!.GetComponent<CameraShake>();
         _audioPlayer = FindObjectOfType<AudioPlayer>();
         _scoreKeeper = FindObjectOfType<ScoreKeeper>();
         _levelManager = FindObjectOfType<LevelManager>();
@@ -68,12 +65,14 @@ public class Health : MonoBehaviour
         {
             _levelManager.LoadGameOver();
         }
+
         Destroy(gameObject);
     }
 
     private void PlayHitEffect(ParticleSystem effect)
     {
-        ParticleSystem instance = Instantiate(effect, transform.position, Quaternion.identity);
-        Destroy(instance.gameObject, instance.main.duration + instance.main.startLifetime.constantMax);
+        var instance = Instantiate(effect, transform.position, Quaternion.identity);
+        var main = instance.main;
+        Destroy(instance.gameObject, main.duration + main.startLifetime.constantMax);
     }
 }

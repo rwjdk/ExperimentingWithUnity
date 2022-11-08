@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraShake : MonoBehaviour
@@ -9,7 +8,7 @@ public class CameraShake : MonoBehaviour
 
     private Vector3 _initialPosition;
 
-    void Start()
+    private void Start()
     {
         _initialPosition = transform.position;
     }
@@ -25,9 +24,10 @@ public class CameraShake : MonoBehaviour
         while (eplasedTime < _shakeDuration)
         {
             transform.position = _initialPosition + (Vector3)Random.insideUnitCircle * _shakeMagnitude;
-            eplasedTime = eplasedTime + Time.deltaTime;
+            eplasedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
+
         transform.position = _initialPosition + (Vector3)Random.insideUnitCircle * _shakeMagnitude;
     }
 }

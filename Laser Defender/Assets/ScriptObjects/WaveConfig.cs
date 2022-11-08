@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ScriptObjects
 {
@@ -9,11 +8,11 @@ namespace ScriptObjects
     public class WaveConfig : ScriptableObject
     {
         [SerializeField] private List<GameObject> _enemyPrefabs;
-        [SerializeField] Transform _pathPrefab;
-        [SerializeField] float _moveSpeed = 5f;
-        [SerializeField] float _timeBetweenEnemySpawns = 1f;
-        [SerializeField] float _spawnTimeVariance = 0f;
-        [SerializeField] float _minimumSpawnTime = 0.2f;
+        [SerializeField] private Transform _pathPrefab;
+        [SerializeField] private float _moveSpeed = 5f;
+        [SerializeField] private float _timeBetweenEnemySpawns = 1f;
+        [SerializeField] private float _spawnTimeVariance;
+        [SerializeField] private float _minimumSpawnTime = 0.2f;
 
         public float MoveSpeed => _moveSpeed;
         public Transform StartingWaypoints => _pathPrefab.GetChild(0);
