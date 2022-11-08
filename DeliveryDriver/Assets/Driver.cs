@@ -9,7 +9,7 @@ public class Driver : MonoBehaviour
 
     [SerializeField] float _steerSpeed = 150;
     [SerializeField] float _moveSpeed = 5;
-    [SerializeField] bool IsBoosted;
+    public bool IsBoosted;
 
     void Update()
     {
