@@ -1,3 +1,4 @@
+using System;
 using Logic;
 using UnityEngine;
 
@@ -7,8 +8,8 @@ public class CrashDetector : MonoBehaviour
     private readonly SceneManagerHelper _sceneManagerHelper;
     private AudioSource _audioSource;
     private bool _hasCrashed;
-    private PlayerController _playerController;
-
+    public static event Action Crashing;
+    
     public CrashDetector()
     {
         _sceneManagerHelper = new SceneManagerHelper();
@@ -16,7 +17,6 @@ public class CrashDetector : MonoBehaviour
 
     private void Awake()
     {
-        _playerController = FindObjectOfType<PlayerController>();
         _audioSource = GetComponent<AudioSource>();
     }
 
@@ -27,7 +27,7 @@ public class CrashDetector : MonoBehaviour
             _hasCrashed = true;
             Debug.Log("You bumped your head!");
             _crashEffect.Play();
-            _playerController.DisableControls();
+            Crashing?.Invoke();
             _audioSource.Play();
             Invoke(nameof(RestartScene), 2f);
         }

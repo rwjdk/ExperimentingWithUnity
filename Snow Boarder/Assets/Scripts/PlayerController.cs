@@ -13,6 +13,12 @@ public class PlayerController : MonoBehaviour
     {
         _rigidBody = GetComponent<Rigidbody2D>();
         _surfaceEffector = FindObjectOfType<SurfaceEffector2D>();
+        CrashDetector.Crashing += CrashDetector_Crashing;
+    }
+
+    private void CrashDetector_Crashing()
+    {
+        DisableControls();
     }
 
     private void Update()
