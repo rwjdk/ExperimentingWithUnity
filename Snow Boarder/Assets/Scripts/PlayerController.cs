@@ -1,50 +1,51 @@
-using JetBrains.Annotations;
+using Logic;
 using UnityEngine;
 
-[UsedImplicitly]
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D _rigidBody;
     [SerializeField] private float _torque;
-    private SurfaceEffector2D _surfaceEffector;
-    [SerializeField] ParticleSystem _moveEffect;
+    [SerializeField] private ParticleSystem _moveEffect;
     private bool _canMove = true;
+    private Rigidbody2D _rigidBody;
+    private SurfaceEffector2D _surfaceEffector;
 
-    [UsedImplicitly]
-    void Start()
+    private void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
         _surfaceEffector = FindObjectOfType<SurfaceEffector2D>();
     }
 
-    [UsedImplicitly]
-    void Update()
+    private void Update()
     {
-        if (_canMove)
+        if (!_canMove)
         {
-            RotatePlayer();
-            RespondToBoost();
+            return;
         }
+        RotatePlayer();
+        RespondToBoost();
     }
 
-    [UsedImplicitly]
-    void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Ground"))
+        if (HasGroundTag(other))
         {
             _moveEffect.Play();
             Debug.Log("Touching ground");
         }
     }
 
-    [UsedImplicitly]
-    void OnCollisionExit2D(Collision2D other)
+    private void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Ground"))
+        if (HasGroundTag(other))
         {
             _moveEffect.Stop();
             Debug.Log("in the air");
         }
+    }
+
+    private static bool HasGroundTag(Collision2D other)
+    {
+        return other.gameObject.CompareTag(Constants.Tags.Ground);
     }
 
     public void DisableControls()

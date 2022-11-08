@@ -1,31 +1,40 @@
-using JetBrains.Annotations;
+using Logic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-[UsedImplicitly]
 public class CrashDetector : MonoBehaviour
 {
-    private bool _hasCrashed;
-
     [SerializeField] private ParticleSystem _crashEffect;
+    private readonly SceneManagerHelper _sceneManagerHelper;
+    private AudioSource _audioSource;
+    private bool _hasCrashed;
+    private PlayerController _playerController;
 
-    [UsedImplicitly]
-    void OnTriggerEnter2D(Collider2D other)
+    public CrashDetector()
     {
-        if (other.CompareTag("Ground") && !_hasCrashed)
+        _sceneManagerHelper = new SceneManagerHelper();
+    }
+
+    private void Awake()
+    {
+        _playerController = FindObjectOfType<PlayerController>();
+        _audioSource = GetComponent<AudioSource>();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!_hasCrashed && other.CompareTag(Constants.Tags.Ground))
         {
             _hasCrashed = true;
             Debug.Log("You bumped your head!");
             _crashEffect.Play();
-            FindObjectOfType<PlayerController>().DisableControls();
-            GetComponent<AudioSource>().Play();
-            Invoke(nameof(LoadScene), 2f);
-
+            _playerController.DisableControls();
+            _audioSource.Play();
+            Invoke(nameof(RestartScene), 2f);
         }
     }
 
-    void LoadScene()
+    private void RestartScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        _sceneManagerHelper.RestartCurrentScene();
     }
 }

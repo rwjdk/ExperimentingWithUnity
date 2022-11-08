@@ -1,27 +1,37 @@
-using JetBrains.Annotations;
+using Logic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-[UsedImplicitly]
 public class FinishLine : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _finishEffect;
+    private readonly SceneManagerHelper _sceneManagerHelper;
+    private AudioSource _audioSource;
 
-    [UsedImplicitly]
-    void OnTriggerEnter2D(Collider2D other)
+    public FinishLine()
     {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("You Finished");
-            _finishEffect.Play();
-            GetComponent<AudioSource>().Play();
-            Invoke(nameof(LoadScene), 0.5f);
-
-        }
+        _sceneManagerHelper = new SceneManagerHelper();
     }
 
-    void LoadScene()
+    private void Awake()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        _audioSource = GetComponent<AudioSource>();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.CompareTag(Constants.Tags.Player))
+        {
+            return;
+        }
+
+        Debug.Log("You Finished");
+        _finishEffect.Play();
+        _audioSource.Play();
+        Invoke(nameof(RestartScene), 0.5f);
+    }
+
+    private void RestartScene()
+    {
+        _sceneManagerHelper.RestartCurrentScene();
     }
 }
