@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Model
+﻿namespace Model
 {
     public enum QuizState
     {

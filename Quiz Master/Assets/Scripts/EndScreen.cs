@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 
@@ -9,14 +6,12 @@ public class EndScreen : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _finalScoreText;
     private ScoreKeeper _scoreKeeper;
 
-    // Start is called before the first frame update
-    [UsedImplicitly]
-    void Awake()
+    private void Awake()
     {
         _scoreKeeper = FindObjectOfType<ScoreKeeper>();
     }
 
-    void Update()
+    private void Update()
     {
         ShowFinalScore();
     }
