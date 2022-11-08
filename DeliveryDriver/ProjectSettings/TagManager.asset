@@ -7,9 +7,6 @@ TagManager:
   - Package
   - Customer
   - Booster
-  - FinishText
-  - ThankYou
-  - Timer
   layers:
   - Default
   - TransparentFX

@@ -1421,6 +1421,7 @@ GameObject:
   - component: {fileID: 578212660}
   - component: {fileID: 578212659}
   - component: {fileID: 578212658}
+  - component: {fileID: 578212661}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -1512,6 +1513,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &578212661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578212656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c58f3dec107c774abd267c489c61fb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timerText: {fileID: 1993322145}
+  _youWonText: {fileID: 1119554579}
 --- !u!4 &597170755 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1121044964459876123, guid: c0e945662aa33904393026919da52044, type: 3}
@@ -1529,7 +1544,7 @@ GameObject:
   - component: {fileID: 620217281}
   m_Layer: 0
   m_Name: SpeechBubble
-  m_TagString: ThankYou
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2601,7 +2616,7 @@ GameObject:
   - component: {fileID: 1119554579}
   m_Layer: 5
   m_Name: YouWon
-  m_TagString: FinishText
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3330,6 +3345,7 @@ GameObject:
   - component: {fileID: 1726909190}
   - component: {fileID: 1726909189}
   - component: {fileID: 1726909195}
+  - component: {fileID: 1726909196}
   - component: {fileID: 1726909193}
   - component: {fileID: 1726909194}
   m_Layer: 0
@@ -3353,7 +3369,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _steerSpeed: 150
   _moveSpeed: 10
-  IsBoosted: 0
 --- !u!212 &1726909190
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3481,8 +3496,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0466b471a6f920a4e857f7c6074dfe9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _car: {fileID: 1726909188}
   _carPackage: {fileID: 366094916}
+  _customerThankYou: {fileID: 620217280}
+--- !u!114 &1726909196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1726909188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41b77ff1ff8a1db4eb6d6ec5999f056f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1775518686
 GameObject:
   m_ObjectHideFlags: 0
@@ -4288,7 +4315,7 @@ GameObject:
   - component: {fileID: 1993322145}
   m_Layer: 5
   m_Name: Timer
-  m_TagString: Timer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4517,10 +4544,6 @@ PrefabInstance:
     - target: {fileID: 2363008657015433281, guid: c49a1513e6190ba4c98b1411a6b867c2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5704131708976965833, guid: c49a1513e6190ba4c98b1411a6b867c2, type: 3}
-      propertyPath: m_SortingOrder
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7937145991902457355, guid: c49a1513e6190ba4c98b1411a6b867c2, type: 3}
       propertyPath: m_Name
