@@ -1,29 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Logic;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed = 1f;
+    private float _moveSpeed = 1f;
     private Rigidbody2D _rigidbody;
 
-    void Start()
+    private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    private void Update()
     {
         _rigidbody.velocity = new Vector2(_moveSpeed, 0f);
     }
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        if (!col.CompareTag(Constants.Tags.Coin))
+        if (col.CompareTag(Constants.Tags.Coin)) //Enemies should not react to coins
         {
-            _moveSpeed = -_moveSpeed;
-            transform.localScale = new Vector2(-Mathf.Sign(_rigidbody.velocity.x), 1f);
+            return;
         }
+
+        _moveSpeed = -_moveSpeed;
+        transform.localScale = new Vector2(-Mathf.Sign(_rigidbody.velocity.x), 1f);
     }
 }

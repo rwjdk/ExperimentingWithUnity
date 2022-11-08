@@ -1,8 +1,6 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
 
-public static class OverallGameState
+public static partial class OverallGameState
 {
     private const int MaxLives = 999;
     public static int PlayerLives { get; private set; } = MaxLives;

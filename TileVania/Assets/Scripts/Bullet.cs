@@ -1,38 +1,36 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Logic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private Rigidbody2D _rigidBody;
-    private float _bulletSpeed = 7f;
+    private const float BulletSpeed = 7f;
     private PlayerMovement _player;
-    private float _xSpeed;
+    private Rigidbody2D _rigidBody;
+    private float _speed;
 
-    void Start()
+    private void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
         _player = FindObjectOfType<PlayerMovement>();
-        _xSpeed = _player.transform.localScale.x * _bulletSpeed;
+        _speed = _player.transform.localScale.x * BulletSpeed;
     }
 
-    void Update()
+    private void Update()
     {
-        _rigidBody.velocity = new Vector2(_xSpeed, 0f);
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag(Constants.Tags.Enemy))
-        {
-            Destroy(other.gameObject);
-            Destroy(gameObject);
-        }
+        _rigidBody.velocity = new Vector2(_speed, 0f);
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
         Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag(Constants.Tags.Enemy)) //Enemy Hit!
+        {
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
     }
 }
