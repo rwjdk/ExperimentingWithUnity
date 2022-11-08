@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5704131708976965833}
   - component: {fileID: 2075643996292802938}
   m_Layer: 0
-  m_Name: boostPrefab
+  m_Name: Boost
   m_TagString: Booster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7937145991902457355}
-  m_LocalRotation: {x: -0, y: -0, z: 0.0028279752, w: 0.999996}
+  m_LocalRotation: {x: 0, y: 0, z: 0.0028274304, w: 0.999996}
   m_LocalPosition: {x: 32.01, y: 3.7, z: 32.362503}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: f0d9ea5f3f6d18a4cb5794261da1baef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
