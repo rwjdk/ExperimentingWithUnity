@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace WayPoint
+namespace WayPointSystem
 {
     public class WayPoint : MonoBehaviour
     {
@@ -11,14 +11,15 @@ namespace WayPoint
         public Vector3[] Points => _points;
         public Vector3 CurrentPosition { get; private set; }
 
+        public Vector3 GetWayPointPosition(int index)
+        {
+            return CurrentPosition + Points[index];
+        }
+
         private void Start()
         {
             _gameStarted = true;
             CurrentPosition = transform.position;
-        }
-
-        private void Update()
-        {
         }
 
         //Editor Only Code

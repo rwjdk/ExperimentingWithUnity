@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace WayPoint.Editor
+namespace WayPointSystem.Editor
 {
     [CustomEditor(typeof(WayPoint))]
     public class WayPointEditor : UnityEditor.Editor
