@@ -11,6 +11,10 @@ namespace WayPoint.Editor
         private void OnSceneGUI()
         {
             Handles.color = Color.red;
+            if (WayPoint.Points == null)
+            {
+                return;
+            }
             for (int i = 0; i < WayPoint.Points.Length; i++)
             {
                 EditorGUI.BeginChangeCheck();
