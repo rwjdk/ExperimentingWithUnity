@@ -5,29 +5,53 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
 
-    public static event Action ReachedEnd;
+    public static event Action<Enemy> ReachedEnd;
 
     private Vector3 NextWayPoint => WayPoint.GetWayPointPosition(_currentWayPointIndex);
-    private bool ReachedLastWayPoint => _currentWayPointIndex >= WayPoint.Points.Length;
+    private bool ReachedLastWayPoint => _currentWayPointIndex >= WayPoint.Points?.Length;
     private int _currentWayPointIndex;
+    private EnemyHealth _enemyHealth;
+    private float _originalMovementSpeed;
+    private Vector3 _lastPointPosition;
+    private SpriteRenderer _spriteRenderer;
+
     public WayPointSystem.WayPoint WayPoint { get; set; }
+
+    private void Awake()
+    {
+        _originalMovementSpeed = _moveSpeed;
+    }
 
     private void Start()
     {
         _currentWayPointIndex = 0;
+        _enemyHealth = GetComponent<EnemyHealth>();
+        _lastPointPosition = transform.position;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
     {
         Move();
+        Rotate();
     }
+
+    public void StopMovement()
+    {
+        _moveSpeed = 0;
+    }
+
+    public void ResumeMovement()
+    {
+        _moveSpeed = _originalMovementSpeed;
+    }
+
 
     private void Move()
     {
         if (ReachedLastWayPoint)
         {
-            ReachedEnd?.Invoke();
-            ObjectPooler.ReturnToPool(gameObject);
+            EndPointReached();
             return; //No more movement needed
         }
 
@@ -35,8 +59,21 @@ public class Enemy : MonoBehaviour
 
         if (NextWayPointReached())
         {
+            _lastPointPosition = transform.position;
             _currentWayPointIndex++;
         }
+    }
+
+    private void Rotate()
+    {
+        _spriteRenderer.flipX = NextWayPoint.x < _lastPointPosition.x;
+    }
+
+    public void EndPointReached()
+    {
+        ReachedEnd?.Invoke(this);
+        _enemyHealth.ResetHealth();
+        ObjectPooler.ReturnToPool(gameObject);
     }
 
     private bool NextWayPointReached()
@@ -47,6 +84,7 @@ public class Enemy : MonoBehaviour
 
     public void Reset()
     {
+        _moveSpeed = _originalMovementSpeed;
         _currentWayPointIndex = 0;
     }
 }

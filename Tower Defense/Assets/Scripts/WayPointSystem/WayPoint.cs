@@ -13,6 +13,11 @@ namespace WayPointSystem
 
         public Vector3 GetWayPointPosition(int index)
         {
+            if (index >= Points.Length)
+            {
+                return CurrentPosition;
+            }
+
             return CurrentPosition + Points[index];
         }
 

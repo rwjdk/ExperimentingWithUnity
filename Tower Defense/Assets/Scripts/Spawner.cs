@@ -67,15 +67,17 @@ public class Spawner : MonoBehaviour
 
     private void OnEnable()
     {
-        Enemy.ReachedEnd += Enemy_ReachedEnd;
+        Enemy.ReachedEnd += RecordEnemyEndLife;
+        EnemyHealth.Died += RecordEnemyEndLife;
     }
 
     private void OnDisable()
     {
-        Enemy.ReachedEnd -= Enemy_ReachedEnd;
+        Enemy.ReachedEnd -= RecordEnemyEndLife;
+        EnemyHealth.Died -= RecordEnemyEndLife;
     }
 
-    private void Enemy_ReachedEnd()
+    private void RecordEnemyEndLife(Enemy enemy)
     {
         _enemiesRemaining--;
         if (_enemiesRemaining <= 0)

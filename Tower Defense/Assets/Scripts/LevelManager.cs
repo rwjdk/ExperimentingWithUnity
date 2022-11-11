@@ -16,7 +16,7 @@ public class LevelManager : MonoBehaviour
         Enemy.ReachedEnd -= Enemy_ReachedEnd;
     }
 
-    private void Enemy_ReachedEnd()
+    private void Enemy_ReachedEnd(Enemy enemy)
     {
         _numberOfLives--;
         if (NumberOfLives == 0)
