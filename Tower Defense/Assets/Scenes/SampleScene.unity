@@ -155,8 +155,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnMode: 0
-  _maxEnemyCount: 1
-  _fixedDelayBetweenSpawns: 0.5
+  _maxEnemyCount: 10
+  _fixedDelayBetweenSpawns: 0.7
   _minRandomDelay: 1
   _maxRandomDelay: 3
   _delayBetweenWaves: 1
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _points:
-  - {x: -3.9355233, y: 1.6471549, z: 0}
+  - {x: -3.2648268, y: 1.7847347, z: 0}
   - {x: 4.9918036, y: 3.6577182, z: 0}
   - {x: 2.5101526, y: 0.96200275, z: 0}
   - {x: 5.8193846, y: -1.2169151, z: 0}
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47748a32e637342469928c60e470c67f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 1400299092408194183, guid: ce2beb3314f8aff4cba642bd1ae59923, type: 3}
+  _prefab: {fileID: 2246412106007649221, guid: d2873b29c99ff77428927335c66ebd31, type: 3}
   _poolSize: 20
 --- !u!1 &519420028
 GameObject:
