@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public static event Action<Enemy, float> OnEnemyHit;
+    public static Action<Enemy, float> OnEnemyHit;
 
     [SerializeField] protected float _moveSpeed;
     [SerializeField] protected float _damage;
@@ -13,7 +13,7 @@ public class Projectile : MonoBehaviour
     public float Damage => _damage;
 
     protected Enemy EnemyTarget;
-    private float _minDistanceToDealDamage = 0.1f;
+    private readonly float _minDistanceToDealDamage = 0.1f;
     public TurretProjectile Owner { get; set; }
 
     protected virtual void Update()
@@ -62,7 +62,7 @@ public class Projectile : MonoBehaviour
     protected void HitTarget()
     {
         OnEnemyHit?.Invoke(EnemyTarget, _damage);
-        EnemyTarget.Health.DealDamage(_damage);
+        EnemyTarget.EnemyHealth.DealDamage(_damage);
         Owner.ResetTurretProjectile();
         ObjectPooler.ReturnToPool(gameObject);
     }

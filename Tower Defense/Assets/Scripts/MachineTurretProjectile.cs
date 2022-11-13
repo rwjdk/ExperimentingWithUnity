@@ -13,8 +13,8 @@ public class MachineTurretProjectile : TurretProjectile
             {
                 var directionTotarget = _turret.CurrentEnemyTarget.transform.position - transform.position;
                 FireProjectile(directionTotarget);
-                _nextAttackTime = Time.time + _delayBetweenAttacks;
             }
+            _nextAttackTime = Time.time + _delayBetweenAttacks;
         }
     }
 

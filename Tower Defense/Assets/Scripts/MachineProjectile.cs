@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MachineProjectile : Projectile
@@ -26,9 +24,10 @@ public class MachineProjectile : Projectile
             if (other.CompareTag(Constants.Tags.Enemy))
             {
                 var enemy = other.GetComponent<Enemy>();
-                if (enemy.Health.CurrentHealth > 0)
+                if (enemy.EnemyHealth.CurrentHealth > 0)
                 {
-                    enemy.Health.DealDamage(_damage);
+                    OnEnemyHit?.Invoke(enemy, Damage);
+                    enemy.EnemyHealth.DealDamage(_damage);
                 }
                 ObjectPooler.ReturnToPool(gameObject);
             }

@@ -8,7 +8,7 @@ public class TurretProjectile : MonoBehaviour
     [SerializeField] protected float _delayBetweenAttacks;
     protected float _nextAttackTime;
     protected ObjectPooler _pooler;
-    private Projectile _currentProjectileLoaded;
+    protected Projectile _currentProjectileLoaded;
     protected Turret _turret;
 
     private void Start()
@@ -26,7 +26,7 @@ public class TurretProjectile : MonoBehaviour
 
         if (Time.time > _nextAttackTime)
         {
-            if (_turret.CurrentEnemyTarget != null && _currentProjectileLoaded != null && _turret.CurrentEnemyTarget.Health.CurrentHealth > 0)
+            if (_turret.CurrentEnemyTarget != null && _currentProjectileLoaded != null && _turret.CurrentEnemyTarget.EnemyHealth.CurrentHealth > 0)
             {
                 _currentProjectileLoaded.transform.parent = null;
                 _currentProjectileLoaded.SetEnemy(_turret.CurrentEnemyTarget);
