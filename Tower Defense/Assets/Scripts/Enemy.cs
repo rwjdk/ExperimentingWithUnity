@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
 
     public WayPointSystem.WayPoint WayPoint { get; set; }
+    public EnemyHealth Health => _enemyHealth;
 
     private void Awake()
     {
