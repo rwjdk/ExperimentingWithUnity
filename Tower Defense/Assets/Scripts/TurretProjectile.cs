@@ -1,12 +1,15 @@
+using System;
 using UnityEngine;
 
 public class TurretProjectile : MonoBehaviour
 {
-    [SerializeField] private Transform _projectileSpawnPosition;
-
-    private ObjectPooler _pooler;
+    [SerializeField] protected Transform _projectileSpawnPosition;
+    
+    [SerializeField] protected float _delayBetweenAttacks;
+    protected float _nextAttackTime;
+    protected ObjectPooler _pooler;
     private Projectile _currentProjectileLoaded;
-    private Turret _turret;
+    protected Turret _turret;
 
     private void Start()
     {
@@ -14,27 +17,38 @@ public class TurretProjectile : MonoBehaviour
         _turret = GetComponent<Turret>();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (_currentProjectileLoaded == null)
         {
             LoadProjectile();
         }
 
-        if (_turret.CurrentEnemyTarget != null && _currentProjectileLoaded != null && _turret.CurrentEnemyTarget.Health.CurrentHealth > 0)
+        if (Time.time > _nextAttackTime)
         {
-            _currentProjectileLoaded.transform.parent = null;
-            _currentProjectileLoaded.SetEnemy(_turret.CurrentEnemyTarget);
+            if (_turret.CurrentEnemyTarget != null && _currentProjectileLoaded != null && _turret.CurrentEnemyTarget.Health.CurrentHealth > 0)
+            {
+                _currentProjectileLoaded.transform.parent = null;
+                _currentProjectileLoaded.SetEnemy(_turret.CurrentEnemyTarget);
+            }
+
+            _nextAttackTime = Time.time + _delayBetweenAttacks;
         }
     }
 
-    private void LoadProjectile()
+    protected virtual void LoadProjectile()
     {
-        var projectile = _pooler.GetPoolObject();
+        var projectile = _pooler.GetInstanceFromPool();
         projectile.transform.localPosition = _projectileSpawnPosition.position;
         projectile.transform.SetParent(_projectileSpawnPosition);
         _currentProjectileLoaded = projectile.GetComponent<Projectile>();
+        _currentProjectileLoaded.Owner = this;
+        _currentProjectileLoaded.ResetProjectile();
         projectile.SetActive(true);
-        
+    }
+
+    public void ResetTurretProjectile()
+    {
+        _currentProjectileLoaded = null;
     }
 }

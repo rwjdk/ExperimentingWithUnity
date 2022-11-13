@@ -41,7 +41,7 @@ public class Spawner : MonoBehaviour
 
     private void Spawn()
     {
-        var instance = _pooler.GetPoolObject();
+        var instance = _pooler.GetInstanceFromPool();
         var enemy = instance.GetComponent<Enemy>();
         enemy.WayPoint = _wayPoint;
         enemy.transform.localPosition = transform.position;

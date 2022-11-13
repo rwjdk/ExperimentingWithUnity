@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,7 +32,7 @@ public class ObjectPooler : MonoBehaviour
         return instance;
     }
 
-    public GameObject GetPoolObject()
+    public GameObject GetInstanceFromPool()
     {
         foreach (var @object in _pool)
         {
@@ -47,5 +48,11 @@ public class ObjectPooler : MonoBehaviour
     public static void ReturnToPool(GameObject @object)
     {
         @object.SetActive(false);
+    }
+
+    public static IEnumerator ReturnToPoolWithDelay(GameObject @object, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ReturnToPool(@object);
     }
 }

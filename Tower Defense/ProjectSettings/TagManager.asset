@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Projectile
   layers:
   - Default
   - TransparentFX
@@ -47,4 +48,10 @@ TagManager:
     locked: 0
   - name: Turrets
     uniqueID: 2088483313
+    locked: 0
+  - name: Projectiles
+    uniqueID: 3184401043
+    locked: 0
+  - name: UI
+    uniqueID: 4163599663
     locked: 0

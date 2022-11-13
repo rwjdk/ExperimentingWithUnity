@@ -1,12 +1,22 @@
+using System;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed;
+    public static event Action<Enemy, float> OnEnemyHit;
 
-    private Enemy _target;
+    [SerializeField] protected float _moveSpeed;
+    [SerializeField] protected float _damage;
 
-    private void Update()
+
+
+    public float Damage => _damage;
+
+    protected Enemy EnemyTarget;
+    private float _minDistanceToDealDamage = 0.1f;
+    public TurretProjectile Owner { get; set; }
+
+    protected virtual void Update()
     {
         MoveProjectile();
         Rotate();
@@ -14,30 +24,52 @@ public class Projectile : MonoBehaviour
 
     public void SetEnemy(Enemy enemy)
     {
-        _target = enemy;
+        EnemyTarget = enemy;
     }
 
     private void Rotate()
     {
-        if (_target == null)
+        if (EnemyTarget == null)
         {
             return;
         }
 
         var selfTransform = transform;
-        var targetPosition = _target.transform.position - selfTransform.position;
+        var targetPosition = EnemyTarget.transform.position - selfTransform.position;
         float angle = Vector3.SignedAngle(selfTransform.up, targetPosition, selfTransform.forward);
         transform.Rotate(0f, 0f, angle);
 
     }
 
-    private void MoveProjectile()
+    protected virtual void MoveProjectile()
     {
-        if (_target == null)
+        if (EnemyTarget == null)
         {
             return;
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, _target.transform.position, _moveSpeed * Time.deltaTime);
+        var enemyPosition = EnemyTarget.transform.position;
+        var selfTransformPosition = transform.position;
+        
+        transform.position = Vector2.MoveTowards(selfTransformPosition, enemyPosition, _moveSpeed * Time.deltaTime);
+        var distanceToTarget = (enemyPosition - selfTransformPosition).magnitude;
+        if (distanceToTarget < _minDistanceToDealDamage)
+        {
+            HitTarget();
+        }
+    }
+
+    protected void HitTarget()
+    {
+        OnEnemyHit?.Invoke(EnemyTarget, _damage);
+        EnemyTarget.Health.DealDamage(_damage);
+        Owner.ResetTurretProjectile();
+        ObjectPooler.ReturnToPool(gameObject);
+    }
+
+    public void ResetProjectile()
+    {
+        EnemyTarget = null;
+        transform.localRotation = Quaternion.identity;
     }
 }
