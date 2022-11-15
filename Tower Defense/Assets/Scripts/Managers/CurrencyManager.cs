@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class CurrencySystem : Singleton<CurrencySystem>
+public class CurrencyManager : Singleton<CurrencyManager>
 {
     [SerializeField] private int _defaultStartCoins ;
 

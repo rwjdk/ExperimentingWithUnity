@@ -28,11 +28,11 @@ public class TurretUpgrade : MonoBehaviour
 
     private void UpgradeTurret()
     {
-        if (CurrencySystem.Instance.TotalCoins > UpgradeCost)
+        if (CurrencyManager.Instance.TotalCoins > UpgradeCost)
         {
             _turretProjectile.Damage += _damageIncremental;
             _turretProjectile.DelayPerShot -= _delayReduce;
-            CurrencySystem.Instance.RemoveCoins(UpgradeCost);
+            CurrencyManager.Instance.RemoveCoins(UpgradeCost);
             UpgradeCost += _upgradeCostIncremental;
         }
     }
