@@ -1,8 +1,11 @@
-﻿public struct Constants
+﻿namespace Shared
 {
-    public struct Tags
+    public struct Constants
     {
-        public const string Enemy = "Enemy";
-        public const string Projectile = "Projectile";
+        public struct Tags
+        {
+            public const string Enemy = "Enemy";
+            public const string Projectile = "Projectile";
+        }
     }
 }

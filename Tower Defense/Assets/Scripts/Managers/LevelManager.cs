@@ -1,27 +1,31 @@
+using Enemies;
 using UnityEngine;
 
-public class LevelManager : MonoBehaviour
+namespace Managers
 {
-    [SerializeField] private int _numberOfLives;
-
-    public int NumberOfLives => _numberOfLives;
-
-    private void OnEnable()
+    public class LevelManager : MonoBehaviour
     {
-        Enemy.ReachedEnd += Enemy_ReachedEnd;
-    }
+        [SerializeField] private int _numberOfLives;
 
-    private void OnDisable()
-    {
-        Enemy.ReachedEnd -= Enemy_ReachedEnd;
-    }
+        public int NumberOfLives => _numberOfLives;
 
-    private void Enemy_ReachedEnd(Enemy enemy)
-    {
-        _numberOfLives--;
-        if (NumberOfLives == 0)
+        private void OnEnable()
         {
-            //todo - Game over
+            Enemy.ReachedEnd += Enemy_ReachedEnd;
+        }
+
+        private void OnDisable()
+        {
+            Enemy.ReachedEnd -= Enemy_ReachedEnd;
+        }
+
+        private void Enemy_ReachedEnd(Enemy enemy)
+        {
+            _numberOfLives--;
+            if (NumberOfLives == 0)
+            {
+                //todo - Game over
+            }
         }
     }
 }

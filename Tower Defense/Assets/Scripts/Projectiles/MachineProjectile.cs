@@ -1,46 +1,51 @@
 using System;
+using Enemies;
+using Shared;
 using UnityEngine;
 
-public class MachineProjectile : Projectile
+namespace Projectiles
 {
-    public Vector2 Direction { get; set; }
-
-    protected override void Update()
+    public class MachineProjectile : Projectile
     {
-        MoveProjectile();
-    }
+        public Vector2 Direction { get; set; }
 
-    protected override void MoveProjectile()
-    {
-        Vector2 movement = Direction.normalized * _moveSpeed * Time.deltaTime;
-        transform.Translate(movement);
-    }
-
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        try
+        protected override void Update()
         {
-            if (other.CompareTag(Constants.Tags.Enemy))
+            MoveProjectile();
+        }
+
+        protected override void MoveProjectile()
+        {
+            Vector2 movement = Direction.normalized * _moveSpeed * Time.deltaTime;
+            transform.Translate(movement);
+        }
+
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            try
             {
-                var enemy = other.GetComponent<Enemy>();
-                if (enemy.EnemyHealth.CurrentHealth > 0)
+                if (other.CompareTag(Constants.Tags.Enemy))
                 {
-                    OnEnemyHit?.Invoke(enemy, Damage);
-                    enemy.EnemyHealth.DealDamage(Damage);
+                    var enemy = other.GetComponent<Enemy>();
+                    if (enemy.EnemyHealth.CurrentHealth > 0)
+                    {
+                        OnEnemyHit?.Invoke(enemy, Damage);
+                        enemy.EnemyHealth.DealDamage(Damage);
+                    }
+                    ObjectPooler.ReturnToPool(gameObject);
                 }
-                ObjectPooler.ReturnToPool(gameObject);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-    }
 
-    private void OnEnable()
-    {
-        StartCoroutine(ObjectPooler.ReturnToPoolWithDelay(gameObject, 5f));
+        private void OnEnable()
+        {
+            StartCoroutine(ObjectPooler.ReturnToPoolWithDelay(gameObject, 5f));
+        }
     }
 }

@@ -1,5 +1,8 @@
-﻿public enum SpawnMode
+﻿namespace Spawners
 {
-    Fixed,
-    Random
+    public enum SpawnMode
+    {
+        Fixed,
+        Random
+    }
 }

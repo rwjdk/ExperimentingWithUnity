@@ -1,58 +1,62 @@
-using System;
+using Enemies;
+using Shared;
 using UnityEngine;
 
-public class CurrencyManager : Singleton<CurrencyManager>
+namespace Managers
 {
-    [SerializeField] private int _defaultStartCoins ;
-
-    private readonly string _currencySaveKey = "MY_GAME_CURRENCY";
-
-    public int TotalCoins { get; set; }
-
-    private void Start()
+    public class CurrencyManager : Singleton<CurrencyManager>
     {
-        PlayerPrefs.DeleteKey(_currencySaveKey);
-        LoadCoins();
-    }
+        [SerializeField] private int _defaultStartCoins ;
 
-    private void LoadCoins()
-    {
-        TotalCoins = PlayerPrefs.GetInt(_currencySaveKey, _defaultStartCoins);
-    }
+        private readonly string _currencySaveKey = "MY_GAME_CURRENCY";
 
-    public void AddCoins(int amount)
-    {
-        TotalCoins += amount;
-        Persist();
-    }
+        public int TotalCoins { get; set; }
 
-    public void RemoveCoins(int amount)
-    {
-        if (TotalCoins >= amount)
+        private void Start()
         {
-            TotalCoins -= amount;
+            PlayerPrefs.DeleteKey(_currencySaveKey);
+            LoadCoins();
+        }
+
+        private void LoadCoins()
+        {
+            TotalCoins = PlayerPrefs.GetInt(_currencySaveKey, _defaultStartCoins);
+        }
+
+        public void AddCoins(int amount)
+        {
+            TotalCoins += amount;
             Persist();
         }
-    }
 
-    private void Persist()
-    {
-        PlayerPrefs.SetInt(_currencySaveKey, TotalCoins);
-        PlayerPrefs.Save();
-    }
+        public void RemoveCoins(int amount)
+        {
+            if (TotalCoins >= amount)
+            {
+                TotalCoins -= amount;
+                Persist();
+            }
+        }
 
-    private void OnEnable()
-    {
-        EnemyHealth.Died += EnemyDied;
-    }
+        private void Persist()
+        {
+            PlayerPrefs.SetInt(_currencySaveKey, TotalCoins);
+            PlayerPrefs.Save();
+        }
 
-    private void EnemyDied(Enemy obj)
-    {
-        TotalCoins += 1;
-    }
+        private void OnEnable()
+        {
+            EnemyHealth.Died += EnemyDied;
+        }
 
-    private void OnDisable()
-    {
-        EnemyHealth.Died -= EnemyDied;
+        private void EnemyDied(Enemy obj)
+        {
+            TotalCoins += 1;
+        }
+
+        private void OnDisable()
+        {
+            EnemyHealth.Died -= EnemyDied;
+        }
     }
 }

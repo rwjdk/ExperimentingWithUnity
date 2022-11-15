@@ -1,31 +1,31 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : Component
+namespace Shared
 {
-    private static T _instance;
-
-    public static T Instance
+    public class Singleton<T> : MonoBehaviour where T : Component
     {
-        get
+        private static T _instance;
+
+        public static T Instance
         {
-            if (_instance == null)
+            get
             {
-                _instance = FindObjectOfType<T>();
                 if (_instance == null)
                 {
-                    var newInstance = new GameObject();
-                    _instance = newInstance.AddComponent<T>();
+                    _instance = FindObjectOfType<T>();
+                    if (_instance == null)
+                    {
+                        var newInstance = new GameObject();
+                        _instance = newInstance.AddComponent<T>();
+                    }
                 }
+                return _instance;
             }
-            return _instance;
         }
-    }
 
-    public void Awake()
-    {
-        _instance = this as T;
+        public void Awake()
+        {
+            _instance = this as T;
+        }
     }
 }

@@ -1,11 +1,14 @@
-using UnityEngine;
+using Shared;
 
-public class DamageTextManager : Singleton<DamageTextManager>
+namespace Managers
 {
-    public ObjectPooler Pooler { get; set; }
-
-    private void Start()
+    public class DamageTextManager : Singleton<DamageTextManager>
     {
-        Pooler = GetComponent<ObjectPooler>();
+        public ObjectPooler Pooler { get; set; }
+
+        private void Start()
+        {
+            Pooler = GetComponent<ObjectPooler>();
+        }
     }
 }

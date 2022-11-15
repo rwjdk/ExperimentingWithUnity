@@ -1,39 +1,44 @@
-using System;
 using System.Globalization;
+using Managers;
+using Projectiles;
+using UI;
 using UnityEngine;
 
-public class EnemyEffects : MonoBehaviour
+namespace Enemies
 {
-    [SerializeField] private Transform _textDamageSpawnPosition;
-
-    private Enemy _enemy;
-
-    private void Start()
+    public class EnemyEffects : MonoBehaviour
     {
-        _enemy = GetComponent<Enemy>();
-    }
+        [SerializeField] private Transform _textDamageSpawnPosition;
 
-    private void OnEnable()
-    {
-        Projectile.OnEnemyHit += Projectile_OnEnemyHit;
-    }
+        private Enemy _enemy;
 
-    private void OnDisable()
-    {
-        Projectile.OnEnemyHit -= Projectile_OnEnemyHit;
-    }
-
-    private void Projectile_OnEnemyHit(Enemy enemy, float damage)
-    {
-        if (enemy == _enemy)
+        private void Start()
         {
-            GameObject newInstance = DamageTextManager.Instance.Pooler.GetInstanceFromPool();
-            var damageText = newInstance.GetComponent<DamageText>().Text;
-            damageText.text = damage.ToString(CultureInfo.InvariantCulture);
+            _enemy = GetComponent<Enemy>();
+        }
 
-            newInstance.transform.SetParent(_textDamageSpawnPosition);
-            newInstance.transform.position = _textDamageSpawnPosition.position;
-            newInstance.SetActive(true);
+        private void OnEnable()
+        {
+            Projectile.OnEnemyHit += Projectile_OnEnemyHit;
+        }
+
+        private void OnDisable()
+        {
+            Projectile.OnEnemyHit -= Projectile_OnEnemyHit;
+        }
+
+        private void Projectile_OnEnemyHit(Enemy enemy, float damage)
+        {
+            if (enemy == _enemy)
+            {
+                GameObject newInstance = DamageTextManager.Instance.Pooler.GetInstanceFromPool();
+                var damageText = newInstance.GetComponent<DamageText>().Text;
+                damageText.text = damage.ToString(CultureInfo.InvariantCulture);
+
+                newInstance.transform.SetParent(_textDamageSpawnPosition);
+                newInstance.transform.position = _textDamageSpawnPosition.position;
+                newInstance.SetActive(true);
+            }
         }
     }
 }

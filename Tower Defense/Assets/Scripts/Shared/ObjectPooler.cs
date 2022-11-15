@@ -2,57 +2,60 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPooler : MonoBehaviour
+namespace Shared
 {
-    [SerializeField] private GameObject _prefab;
-    [SerializeField] private int _poolSize;
-
-    private List<GameObject> _pool;
-    private GameObject _poolContainer;
-
-    private void Awake()
+    public class ObjectPooler : MonoBehaviour
     {
-        _pool = new List<GameObject>();
-        _poolContainer = new GameObject($"Pool: {_prefab.name}");
-        CreatePooler();
-    }
+        [SerializeField] private GameObject _prefab;
+        [SerializeField] private int _poolSize;
 
-    private void CreatePooler()
-    {
-        for (int i = 0; i < _poolSize; i++)
+        private List<GameObject> _pool;
+        private GameObject _poolContainer;
+
+        private void Awake()
         {
-            _pool.Add(CreateObject());
+            _pool = new List<GameObject>();
+            _poolContainer = new GameObject($"Pool: {_prefab.name}");
+            CreatePooler();
         }
-    }
 
-    private GameObject CreateObject()
-    {
-        var instance = Instantiate(_prefab, _poolContainer.transform);
-        instance.SetActive(false);
-        return instance;
-    }
-
-    public GameObject GetInstanceFromPool()
-    {
-        foreach (var @object in _pool)
+        private void CreatePooler()
         {
-            if (!@object.activeInHierarchy)
+            for (int i = 0; i < _poolSize; i++)
             {
-                return @object;
+                _pool.Add(CreateObject());
             }
         }
 
-        return CreateObject();
-    }
+        private GameObject CreateObject()
+        {
+            var instance = Instantiate(_prefab, _poolContainer.transform);
+            instance.SetActive(false);
+            return instance;
+        }
 
-    public static void ReturnToPool(GameObject @object)
-    {
-        @object.SetActive(false);
-    }
+        public GameObject GetInstanceFromPool()
+        {
+            foreach (var @object in _pool)
+            {
+                if (!@object.activeInHierarchy)
+                {
+                    return @object;
+                }
+            }
 
-    public static IEnumerator ReturnToPoolWithDelay(GameObject @object, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        ReturnToPool(@object);
+            return CreateObject();
+        }
+
+        public static void ReturnToPool(GameObject @object)
+        {
+            @object.SetActive(false);
+        }
+
+        public static IEnumerator ReturnToPoolWithDelay(GameObject @object, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            ReturnToPool(@object);
+        }
     }
 }

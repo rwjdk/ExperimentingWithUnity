@@ -1,85 +1,89 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using Enemies;
+using Shared;
 using UnityEngine;
 
-public class Turret : MonoBehaviour
+namespace Turrets
 {
-    [SerializeField] private float _attackRange;
-
-    private bool _gameStarted;
-    private List<Enemy> _enemies;
-
-    public Enemy CurrentEnemyTarget { get; set; }
-
-    private void Start()
+    public class Turret : MonoBehaviour
     {
-        _gameStarted = true;
-        _enemies = new List<Enemy>();
-    }
+        [SerializeField] private float _attackRange;
 
-    private void Update()
-    {
-        SetCurrentEnemy();
-        RotateTowardTarget();
-    }
+        private bool _gameStarted;
+        private List<Enemy> _enemies;
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag(Constants.Tags.Enemy))
+        public Enemy CurrentEnemyTarget { get; set; }
+
+        private void Start()
         {
-            var newEnemy = other.GetComponent<Enemy>();
-            _enemies.Add(newEnemy);
-
+            _gameStarted = true;
+            _enemies = new List<Enemy>();
         }
-    }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag(Constants.Tags.Enemy))
+        private void Update()
         {
-            var leavingEnemy = other.GetComponent<Enemy>();
-            lock (_enemies)
+            SetCurrentEnemy();
+            RotateTowardTarget();
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag(Constants.Tags.Enemy))
             {
-                if (_enemies.Contains(leavingEnemy))
+                var newEnemy = other.GetComponent<Enemy>();
+                _enemies.Add(newEnemy);
+
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.CompareTag(Constants.Tags.Enemy))
+            {
+                var leavingEnemy = other.GetComponent<Enemy>();
+                lock (_enemies)
                 {
-                    _enemies.Remove(leavingEnemy);
+                    if (_enemies.Contains(leavingEnemy))
+                    {
+                        _enemies.Remove(leavingEnemy);
+                    }
                 }
             }
         }
-    }
 
-    private void RotateTowardTarget()
-    {
-        if (CurrentEnemyTarget == null)
+        private void RotateTowardTarget()
         {
-            return;
+            if (CurrentEnemyTarget == null)
+            {
+                return;
+            }
+
+            var selfTransform = transform;
+            var targetPosition = CurrentEnemyTarget.transform.position - selfTransform.position;
+            float angle = Vector3.SignedAngle(selfTransform.up, targetPosition, selfTransform.forward);
+            transform.Rotate(0f,0f, angle);
         }
 
-        var selfTransform = transform;
-        var targetPosition = CurrentEnemyTarget.transform.position - selfTransform.position;
-        float angle = Vector3.SignedAngle(selfTransform.up, targetPosition, selfTransform.forward);
-        transform.Rotate(0f,0f, angle);
-    }
-
-    private void SetCurrentEnemy()
-    {
-        if (!_enemies.Any())
+        private void SetCurrentEnemy()
         {
-            CurrentEnemyTarget = null;
-            return;
+            if (!_enemies.Any())
+            {
+                CurrentEnemyTarget = null;
+                return;
+            }
+
+            CurrentEnemyTarget = _enemies.First();
         }
 
-        CurrentEnemyTarget = _enemies.First();
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (!_gameStarted)
+        private void OnDrawGizmos()
         {
-            GetComponent<CircleCollider2D>().radius = _attackRange;
-        }
+            if (!_gameStarted)
+            {
+                GetComponent<CircleCollider2D>().radius = _attackRange;
+            }
 
-        Gizmos.DrawWireSphere(transform.position, _attackRange);
+            Gizmos.DrawWireSphere(transform.position, _attackRange);
+        }
     }
 }

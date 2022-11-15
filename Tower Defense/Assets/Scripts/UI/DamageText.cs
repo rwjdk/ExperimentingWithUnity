@@ -1,13 +1,17 @@
+using Shared;
 using TMPro;
 using UnityEngine;
 
-public class DamageText : MonoBehaviour
+namespace UI
 {
-    public TextMeshProUGUI Text => GetComponentInChildren<TextMeshProUGUI>();
-
-    public void ReturnTextToPool()
+    public class DamageText : MonoBehaviour
     {
-        transform.SetParent(null);
-        ObjectPooler.ReturnToPool(gameObject);
+        public TextMeshProUGUI Text => GetComponentInChildren<TextMeshProUGUI>();
+
+        public void ReturnTextToPool()
+        {
+            transform.SetParent(null);
+            ObjectPooler.ReturnToPool(gameObject);
+        }
     }
 }
