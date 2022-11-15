@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fae5989198537ab428d4b6df617ab121, type: 3}
   m_Name: MachineTurret2
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 3880286125306742006, guid: e89a2d159d4780a43afd17a5b497105c, type: 3}
-  _shopCost: 10
-  _shopSprite: {fileID: 21300000, guid: 924a78d4dd68afb44812bf4c06a4de39, type: 3}
+  _prefab: {fileID: 7431546820716690960, guid: c39afb0805e446a4d9316ca1d51a82e1, type: 3}
+  _shopCost: 11
+  _shopSprite: {fileID: 21300000, guid: 0b0ed36916721fd4e97b1600ce2b03dc, type: 3}
