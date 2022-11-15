@@ -39,6 +39,7 @@ public class MachineTurretProjectile : TurretProjectile
             newDirection = spreadValue *  direction;
         }
         projectile.Direction = newDirection;
+        projectile.Damage = Damage;
         instance.SetActive(true);
     }
 }

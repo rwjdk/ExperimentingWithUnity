@@ -27,7 +27,7 @@ public class MachineProjectile : Projectile
                 if (enemy.EnemyHealth.CurrentHealth > 0)
                 {
                     OnEnemyHit?.Invoke(enemy, Damage);
-                    enemy.EnemyHealth.DealDamage(_damage);
+                    enemy.EnemyHealth.DealDamage(Damage);
                 }
                 ObjectPooler.ReturnToPool(gameObject);
             }

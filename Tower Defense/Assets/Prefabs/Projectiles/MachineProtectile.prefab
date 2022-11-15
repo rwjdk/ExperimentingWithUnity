@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 586715871415135137}
   - component: {fileID: 3130761490960534765}
   - component: {fileID: 1513550480674424627}
-  - component: {fileID: 8312487174543384052}
   m_Layer: 0
   m_Name: MachineProtectile
   m_TagString: Projectile
@@ -100,7 +99,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 10
-  _damage: 2
 --- !u!58 &1513550480674424627
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -117,24 +115,3 @@ CircleCollider2D:
   m_Offset: {x: 0.0009543896, y: 0}
   serializedVersion: 2
   m_Radius: 0.079437494
---- !u!50 &8312487174543384052
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7959263661893648729}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0

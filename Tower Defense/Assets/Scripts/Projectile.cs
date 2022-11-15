@@ -6,11 +6,9 @@ public class Projectile : MonoBehaviour
     public static Action<Enemy, float> OnEnemyHit;
 
     [SerializeField] protected float _moveSpeed;
-    [SerializeField] protected float _damage;
+    
 
-
-
-    public float Damage => _damage;
+    public float Damage { get; set; }
 
     protected Enemy EnemyTarget;
     private readonly float _minDistanceToDealDamage = 0.1f;
@@ -61,8 +59,8 @@ public class Projectile : MonoBehaviour
 
     protected void HitTarget()
     {
-        OnEnemyHit?.Invoke(EnemyTarget, _damage);
-        EnemyTarget.EnemyHealth.DealDamage(_damage);
+        OnEnemyHit?.Invoke(EnemyTarget, Damage);
+        EnemyTarget.EnemyHealth.DealDamage(Damage);
         Owner.ResetTurretProjectile();
         ObjectPooler.ReturnToPool(gameObject);
     }
