@@ -1,4 +1,6 @@
 using System;
+using Managers;
+using Shared;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,12 +8,15 @@ namespace Enemies
 {
     public class EnemyHealth : MonoBehaviour
     {
+        public static event Action<Enemy> Died;
+        public static event Action<Enemy> Hurt;
+
         [SerializeField] private GameObject _healtBarPrefab;
         [SerializeField] private Transform _barPosition;
         [SerializeField] private float _initialHealth;
         [SerializeField] private float _maxHealth;
-        private Image _healthBar;
         private Enemy _enemy;
+        private Image _healthBar;
         public float CurrentHealth { get; set; }
 
         private void Start()
@@ -30,10 +35,7 @@ namespace Enemies
 
             _healthBar.fillAmount = Mathf.Lerp(_healthBar.fillAmount, CurrentHealth / _maxHealth, Time.deltaTime * 10f); //???
         }
-
-        public static event Action<Enemy> Died;
-        public static event Action<Enemy> Hurt;
-
+        
         private void CreateHealthBar()
         {
             var newBar = Instantiate(_healtBarPrefab, _barPosition.position, Quaternion.identity);
@@ -59,6 +61,7 @@ namespace Enemies
 
         private void Die()
         {
+            AchievementManager.Instance.AddProgress(1, AchivementId.Kill100Enemies, AchivementId.Kill20Enemies, AchivementId.Kill50Enemies);
             Died?.Invoke(_enemy);
         }
 

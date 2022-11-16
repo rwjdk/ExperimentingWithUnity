@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Enemies;
+using Managers;
 using Shared;
 using UnityEngine;
 using WayPointSystem;
@@ -88,6 +89,7 @@ namespace Spawners
             _enemiesRemaining--;
             if (_enemiesRemaining <= 0)
             {
+                AchievementManager.Instance.AddProgress(1, AchivementId.Complete10Waves, AchivementId.Complete20Waves, AchivementId.Complete50Waves, AchivementId.Complete100Waves);
                 OnWaveCompleted?.Invoke();
                 StartCoroutine(NextWave());
             }

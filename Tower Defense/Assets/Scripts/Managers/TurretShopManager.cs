@@ -63,7 +63,7 @@ namespace Managers
                 var instance = Instantiate(turretLoaded.Prefab, parentTransform.position, Quaternion.identity, parentTransform);
                 var turretPlaced = instance.GetComponent<Turret>();
                 _currentNodeSelected.SetTurret(turretPlaced);
-                UiManager.Instance.CloseCloseShopPanel();
+                UiManager.Instance.CloseShopPanel();
             }
         }
     }

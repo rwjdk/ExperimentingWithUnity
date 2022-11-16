@@ -11,7 +11,8 @@ namespace Managers
     public class UiManager : Singleton<UiManager>
     {
         [SerializeField] private GameObject _turretShopPanel;
-        [SerializeField] private GameObject _nodeUiPanel;
+        [SerializeField] private GameObject _nodeUpgradePanel;
+        [SerializeField] private GameObject _achivementPanel;
         [SerializeField] private TextMeshProUGUI _upgradeText;
         [SerializeField] private TextMeshProUGUI _sellText;
         [SerializeField] private TextMeshProUGUI _levelText;
@@ -71,7 +72,7 @@ namespace Managers
 
         public void ShowNodePanel()
         {
-            _nodeUiPanel.SetActive(true);
+            _nodeUpgradePanel.SetActive(true);
             UpdateTurretStats();
         }
 
@@ -90,10 +91,23 @@ namespace Managers
         }
 
 
-        public void CloseCloseShopPanel()
+        public void CloseShopPanel()
         {
             _currentNodeSelected.HideAttackRange();
             _turretShopPanel.SetActive(false);
+        }
+
+        [UsedImplicitly]
+        public void ShowAchivementPanel()
+        {
+            _achivementPanel.SetActive(true);
+            AchievementManager.Instance.UpdateAllProgress();
+        }
+
+        [UsedImplicitly]
+        public void CloseAchivementPanel()
+        {
+            _achivementPanel.SetActive(false);
         }
 
         public void CloseNodePanel()
@@ -102,7 +116,7 @@ namespace Managers
             {
                 _currentNodeSelected.HideAttackRange();
             }
-            _nodeUiPanel.SetActive(false);
+            _nodeUpgradePanel.SetActive(false);
         }
 
     }

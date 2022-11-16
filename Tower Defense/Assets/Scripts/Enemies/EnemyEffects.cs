@@ -32,9 +32,10 @@ namespace Enemies
             if (enemy == _enemy)
             {
                 GameObject newInstance = DamageTextManager.Instance.Pooler.GetInstanceFromPool();
-                var damageText = newInstance.GetComponent<DamageText>().Text;
+                var damageObject = newInstance.GetComponent<DamageText>();
+                var damageText = damageObject.Text;
                 damageText.text = damage.ToString(CultureInfo.InvariantCulture);
-
+                damageObject.ReturnTextToPool();
                 newInstance.transform.SetParent(_textDamageSpawnPosition);
                 newInstance.transform.position = _textDamageSpawnPosition.position;
                 newInstance.SetActive(true);

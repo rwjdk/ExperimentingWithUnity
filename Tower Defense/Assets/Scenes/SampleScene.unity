@@ -11904,7 +11904,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 13652276}
         m_TargetAssemblyTypeName: Managers.UiManager, Assembly-CSharp
-        m_MethodName: CloseCloseShopPanel
+        m_MethodName: CloseShopPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
