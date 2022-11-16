@@ -10,6 +10,8 @@ namespace Turrets
     {
         [SerializeField] private float _attackRange;
 
+        public TurretUpgrade TurretUpgrade { get; set; }
+
         private bool _gameStarted;
         private List<Enemy> _enemies;
 
@@ -19,6 +21,7 @@ namespace Turrets
         {
             _gameStarted = true;
             _enemies = new List<Enemy>();
+            TurretUpgrade = GetComponent<TurretUpgrade>();
         }
 
         private void Update()

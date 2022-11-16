@@ -3,7 +3,7 @@ using UnityEngine;
 namespace TurretShop
 {
     [CreateAssetMenu(menuName = "Turret Shop Setting", fileName = "New Turret Shop Setting")]
-    public class TurretShopSetting : ScriptableObject
+    public class TurretSetting : ScriptableObject
     {
         [SerializeField] private GameObject _prefab;
         [SerializeField] private int _shopCost;

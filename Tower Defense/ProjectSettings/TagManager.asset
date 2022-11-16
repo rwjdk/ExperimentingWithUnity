@@ -46,6 +46,9 @@ TagManager:
   - name: Enemy
     uniqueID: 579226689
     locked: 0
+  - name: Nodes
+    uniqueID: 4076926697
+    locked: 0
   - name: Turrets
     uniqueID: 2088483313
     locked: 0
