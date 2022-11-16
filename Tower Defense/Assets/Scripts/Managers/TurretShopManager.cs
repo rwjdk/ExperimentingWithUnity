@@ -1,4 +1,5 @@
 using System;
+using Nodes;
 using Turrets;
 using TurretShop;
 using UnityEngine;
@@ -33,12 +34,19 @@ namespace Managers
         private void OnEnable()
         {
             Node.OnNodeSelected += OnNodeSelected;
+            Node.OnTurrentSold += OnTurrentSold;
             TurretCard.OnPlaceTurret += PlaceTurret;
+        }
+
+        private void OnTurrentSold()
+        {
+            _currentNodeSelected = null;
         }
 
         private void OnDisable()
         {
             Node.OnNodeSelected -= OnNodeSelected;
+            Node.OnTurrentSold -= OnTurrentSold;
             TurretCard.OnPlaceTurret -= PlaceTurret;
         }
 
@@ -53,8 +61,6 @@ namespace Managers
             {
                 var parentTransform = _currentNodeSelected.transform;
                 var instance = Instantiate(turretLoaded.Prefab, parentTransform.position, Quaternion.identity, parentTransform);
-                //instance.transform.localPosition = ;
-                //instance.transform.parent = _currentNodeSelected.transform;
                 var turretPlaced = instance.GetComponent<Turret>();
                 _currentNodeSelected.SetTurret(turretPlaced);
                 UiManager.Instance.CloseCloseShopPanel();

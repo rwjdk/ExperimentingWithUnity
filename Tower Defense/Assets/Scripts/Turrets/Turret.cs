@@ -6,9 +6,12 @@ using UnityEngine;
 
 namespace Turrets
 {
+    [RequireComponent(typeof(TurretUpgrade))]
     public class Turret : MonoBehaviour
     {
         [SerializeField] private float _attackRange;
+
+        public float AttackRange => _attackRange;
 
         public TurretUpgrade TurretUpgrade { get; set; }
 

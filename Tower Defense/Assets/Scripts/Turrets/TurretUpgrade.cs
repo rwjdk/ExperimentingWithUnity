@@ -9,26 +9,23 @@ namespace Turrets
         [SerializeField] private int _upgradeCostIncremental;
         [SerializeField] private float _damageIncremental;
         [SerializeField] private float _delayReduce;
+        [SerializeField][Range(0,1)] private float _sellPercentage;
 
+        public float SellPercentage { get; set; }
         public int UpgradeCost { get; set; }
-    
+        public int Level { get; set; }
+
         private TurretProjectile _turretProjectile;
 
         private void Start()
         {
             _turretProjectile = GetComponent<TurretProjectile>();
             UpgradeCost = _upgradeInitialCost;
+            Level = 1;
+            SellPercentage = _sellPercentage;
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                UpgradeTurret();
-            }
-        }
-
-        private void UpgradeTurret()
+        public void UpgradeTurret()
         {
             if (CurrencyManager.Instance.TotalCoins > UpgradeCost)
             {
@@ -36,7 +33,13 @@ namespace Turrets
                 _turretProjectile.DelayPerShot -= _delayReduce;
                 CurrencyManager.Instance.RemoveCoins(UpgradeCost);
                 UpgradeCost += _upgradeCostIncremental;
+                Level++;
             }
+        }
+
+        public int GetSellValue()
+        {
+            return Mathf.RoundToInt(UpgradeCost * _sellPercentage);
         }
     }
 }

@@ -10,6 +10,8 @@ namespace Spawners
 {
     public class Spawner : MonoBehaviour
     {
+        public static Action OnWaveCompleted;
+
         [SerializeField] private SpawnMode _spawnMode;
         [SerializeField] private int _maxEnemyCount;
         [SerializeField] private float _fixedDelayBetweenSpawns;
@@ -86,6 +88,7 @@ namespace Spawners
             _enemiesRemaining--;
             if (_enemiesRemaining <= 0)
             {
+                OnWaveCompleted?.Invoke();
                 StartCoroutine(NextWave());
             }
         }
