@@ -51,7 +51,7 @@ namespace Managers
 
         private void EnemyDied(Enemy obj)
         {
-            TotalCoins += 1;
+            TotalCoins += 5;
         }
 
         private void OnDisable()

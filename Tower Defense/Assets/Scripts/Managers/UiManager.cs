@@ -1,10 +1,12 @@
 using System;
 using System.Globalization;
+using Enemies;
 using JetBrains.Annotations;
 using Nodes;
 using Shared;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Managers
 {
@@ -13,14 +15,23 @@ namespace Managers
         [SerializeField] private GameObject _turretShopPanel;
         [SerializeField] private GameObject _nodeUpgradePanel;
         [SerializeField] private GameObject _achivementPanel;
+        [SerializeField] private GameObject _gameOverPanel;
         [SerializeField] private TextMeshProUGUI _upgradeText;
         [SerializeField] private TextMeshProUGUI _sellText;
         [SerializeField] private TextMeshProUGUI _levelText;
         [SerializeField] private TextMeshProUGUI _totalLivesText;
         [SerializeField] private TextMeshProUGUI _totalCoinsText;
         [SerializeField] private TextMeshProUGUI _totalCurrentWaveText;
+        [SerializeField] private TextMeshProUGUI _totalKillsText;
 
         private Node _currentNodeSelected;
+        private int _numberOfEnemiesKilled;
+
+        private void Start()
+        {
+            _numberOfEnemiesKilled = 0;
+            Time.timeScale = 1f; //Needed after restart
+        }
 
         private void Update()
         {
@@ -30,11 +41,18 @@ namespace Managers
         private void OnEnable()
         {
             Node.OnNodeSelected += OnNodeSelected;
+            EnemyHealth.Died += EnemyHealth_Died;
+        }
+
+        private void EnemyHealth_Died(Enemy obj)
+        {
+            _numberOfEnemiesKilled++;
         }
 
         private void OnDisable()
         {
             Node.OnNodeSelected -= OnNodeSelected;
+            EnemyHealth.Died -= EnemyHealth_Died;
         }
 
         private void OnNodeSelected(Node node)
@@ -103,6 +121,14 @@ namespace Managers
             _achivementPanel.SetActive(true);
             AchievementManager.Instance.UpdateAllProgress();
         }
+        
+        
+        public void ShowGameOverPanel()
+        {
+            Time.timeScale = 0;
+            _totalKillsText.text = $"You killed {_numberOfEnemiesKilled} enemies";
+            _gameOverPanel.SetActive(true);
+        }
 
         [UsedImplicitly]
         public void CloseAchivementPanel()
@@ -119,5 +145,35 @@ namespace Managers
             _nodeUpgradePanel.SetActive(false);
         }
 
+        [UsedImplicitly]
+        public void SlowTime()
+        {
+            Time.timeScale = 0.5f;
+        }
+
+        [UsedImplicitly]
+        public void ResumeTime()
+        {
+            Time.timeScale = 1f;
+        }
+        
+        [UsedImplicitly]
+        public void PauseTime()
+        {
+            Time.timeScale = 0f;
+        }
+
+        [UsedImplicitly]
+        public void FastTime()
+        {
+            Time.timeScale = 2f;
+        }
+
+        [UsedImplicitly]
+        public void PlayAgain()
+        {
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }

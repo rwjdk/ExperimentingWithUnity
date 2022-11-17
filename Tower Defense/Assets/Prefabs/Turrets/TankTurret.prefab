@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27381d12ddb2a3e45a8fa174838297df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackRange: 3
+  _attackRange: 4
 --- !u!114 &4461779027141581407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,8 +232,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _projectileSpawnPosition: {fileID: 4461779027734136200}
-  _delayBetweenAttacks: 0.5
-  _damage: 2
+  _delayBetweenAttacks: 1
+  _damage: 5
 --- !u!114 &4461779027141581406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f86477cb9da4eff4ebd3ea554394fdfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _upgradeInitialCost: 10
+  _upgradeInitialCost: 35
   _upgradeCostIncremental: 20
   _damageIncremental: 2
   _delayReduce: 0.1

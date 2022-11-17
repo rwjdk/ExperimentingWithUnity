@@ -19,16 +19,15 @@ namespace Spawners
         [SerializeField] private float _minRandomDelay;
         [SerializeField] private float _maxRandomDelay;
         [SerializeField] private float _delayBetweenWaves;
+        [SerializeField] private ObjectPooler[] _enemyPoolers;
 
         private int _currentNumberOfEnemies;
         private float _spawnTimer;
-        private ObjectPooler _pooler;
         private WayPoint _wayPoint;
         private int _enemiesRemaining;
 
         private void Start()
         {
-            _pooler = GetComponent<ObjectPooler>();
             _wayPoint = GetComponent<WayPoint>();
             _enemiesRemaining = _maxEnemyCount;
         }
@@ -48,13 +47,20 @@ namespace Spawners
 
         private void Spawn()
         {
-            var instance = _pooler.GetInstanceFromPool();
+            var instance = GetPooler().GetInstanceFromPool();
             var enemy = instance.GetComponent<Enemy>();
             enemy.WayPoint = _wayPoint;
+            enemy.EnemyHealth.CurrentHealth *= LevelManager.Instance.LifeFactorIncrease;
             enemy.transform.localPosition = transform.position;
             enemy.Reset();
             instance.SetActive(true);
             _currentNumberOfEnemies++;
+        }
+
+        private ObjectPooler GetPooler()
+        {
+            var randomIndex = Random.Range(0, 4);
+            return _enemyPoolers[randomIndex];
         }
 
         private float GetSpawnDelay()

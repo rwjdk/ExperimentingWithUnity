@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 417113946357081334}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3119698333356799640}
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b5fc931ee356ba4885a1945cd91c58a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 4
+  _moveSpeed: 6
 --- !u!114 &7674866906772013384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
   _healtBarPrefab: {fileID: 446292868663471518, guid: 326e7da0ef0d38043a46f73631a60578, type: 3}
   _barPosition: {fileID: 3119698333356799640}
   _initialHealth: 10
-  _maxHealth: 10
+  _maxHealth: 100
 --- !u!114 &5927186114013974584
 MonoBehaviour:
   m_ObjectHideFlags: 0

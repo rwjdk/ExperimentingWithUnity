@@ -24,12 +24,12 @@ namespace Enemies
         private void Awake()
         {
             _originalMovementSpeed = _moveSpeed;
+            _enemyHealth = GetComponent<EnemyHealth>();
         }
 
         private void Start()
         {
             _currentWayPointIndex = 0;
-            _enemyHealth = GetComponent<EnemyHealth>();
             _lastPointPosition = transform.position;
             _spriteRenderer = GetComponent<SpriteRenderer>();
         }

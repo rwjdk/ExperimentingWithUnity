@@ -10,8 +10,10 @@ namespace Managers
     {
         [SerializeField] private int _numberOfLives;
 
-        public int NumberOfLives => _numberOfLives;
+        public int NumberOfLives => _numberOfLives <= 0 ? 0 : _numberOfLives;
         public int CurrentWave { get; set; }
+
+        public float LifeFactorIncrease => CurrentWave * 2f;
 
         private void Start()
         {
@@ -38,9 +40,9 @@ namespace Managers
         private void Enemy_ReachedEnd(Enemy enemy)
         {
             _numberOfLives--;
-            if (NumberOfLives == 0)
+            if (NumberOfLives <= 0)
             {
-                //todo - Game over
+                UiManager.Instance.ShowGameOverPanel();
             }
         }
     }

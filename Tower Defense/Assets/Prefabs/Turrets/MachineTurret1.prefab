@@ -297,7 +297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _projectileSpawnPosition: {fileID: 1784369763376025103}
   _delayBetweenAttacks: 0.2
-  _damage: 2
+  _damage: 1
   _isDualMachine: 0
   _spreadRange: 0
 --- !u!114 &1784369765117559381
@@ -326,9 +326,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f86477cb9da4eff4ebd3ea554394fdfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _upgradeInitialCost: 10
+  _upgradeInitialCost: 20
   _upgradeCostIncremental: 20
-  _damageIncremental: 2
+  _damageIncremental: 1
   _delayReduce: 0.1
   _sellPercentage: 0.5
 --- !u!58 &1784369765117559380
