@@ -1,18 +1,22 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class BallHandler : MonoBehaviour
 {
-    [SerializeField] private Rigidbody2D _currentBallRidgidBody;
-    [SerializeField] private SpringJoint2D _currentBallSpringJoint;
+    [SerializeField] private GameObject _ballPrefab;
+    [SerializeField] private Rigidbody2D _pivot;
+    [SerializeField] private float _respawnTime;
+
     private Camera _camera;
+    private Rigidbody2D _currentBallRidgidBody;
+    private SpringJoint2D _currentBallSpringJoint;
     private bool _isDragging;
 
     private void Start()
     {
         _camera = Camera.main;
+        StartCoroutine(SpawnNewBall(0));
     }
 
     private void Update()
@@ -28,14 +32,26 @@ public class BallHandler : MonoBehaviour
             {
                 LaunchBall();
             }
-            
+
             return;
         }
+
         _currentBallRidgidBody.isKinematic = true;
         _isDragging = true;
-        Vector2 worldPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+        var worldPosition = Touchscreen.current.primaryTouch.position.ReadValue();
         worldPosition = _camera.ScreenToWorldPoint(worldPosition);
         _currentBallRidgidBody.position = worldPosition;
+    }
+
+    private IEnumerator SpawnNewBall(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        var newBall = Instantiate(_ballPrefab);
+        newBall.transform.position = _pivot.position;
+        _currentBallRidgidBody = newBall.GetComponent<Rigidbody2D>();
+        _currentBallSpringJoint = newBall.GetComponent<SpringJoint2D>();
+        _currentBallSpringJoint.connectedBody = _pivot;
     }
 
     private void LaunchBall()
@@ -44,7 +60,8 @@ public class BallHandler : MonoBehaviour
         _isDragging = false;
         _currentBallRidgidBody = null;
 
-        StartCoroutine(ReleaseBallFromJoint(0.5f));
+        StartCoroutine(ReleaseBallFromJoint(0.1f));
+        StartCoroutine(SpawnNewBall(_respawnTime));
     }
 
     private IEnumerator ReleaseBallFromJoint(float delay)
