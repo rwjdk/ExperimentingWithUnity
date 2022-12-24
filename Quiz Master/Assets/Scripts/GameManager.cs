@@ -1,38 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
-using Assets.Scripts;
-using JetBrains.Annotations;
+using Model;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private Quiz _quiz;
     private EndScreen _endScreen;
+    private Quiz _quiz;
     private Timer _timer;
 
-    [UsedImplicitly]
-    void Awake()
+    private void Awake()
     {
         _quiz = FindObjectOfType<Quiz>();
         _endScreen = FindObjectOfType<EndScreen>();
         _timer = FindObjectOfType<Timer>();
     }
-    
-    [UsedImplicitly]
-    void Start()
+
+    private void Start()
     {
-        _quiz.gameObject.SetActive(true);
-        _endScreen.gameObject.SetActive(false);
+        SetQuizVisibility(Visibility.Show);
+        SetEndScreenVisibility(Visibility.Hide);
     }
 
-    void Update()
+    private void Update()
     {
         if (_timer.IsComplete)
         {
-            _quiz.gameObject.SetActive(false);
-            _endScreen.gameObject.SetActive(true);
+            SetQuizVisibility(Visibility.Hide);
+            SetEndScreenVisibility(Visibility.Show);
         }
+    }
+
+    private void SetEndScreenVisibility(Visibility visibility)
+    {
+        _endScreen.gameObject.SetActive(visibility == Visibility.Show);
+    }
+
+    private void SetQuizVisibility(Visibility visibility)
+    {
+        _quiz.gameObject.SetActive(visibility == Visibility.Show);
     }
 
     public void OnReplayLevel()

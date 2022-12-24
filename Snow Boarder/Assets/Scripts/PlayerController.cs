@@ -1,80 +1,82 @@
-using JetBrains.Annotations;
-using Unity.VisualScripting;
+using Logic;
 using UnityEngine;
-// ReSharper disable FieldCanBeMadeReadOnly.Local
 
-namespace Assets.Scripts
+public class PlayerController : MonoBehaviour
 {
-    [UsedImplicitly]
-    public class PlayerController : MonoBehaviour
+    [SerializeField] private float _torque;
+    [SerializeField] private ParticleSystem _moveEffect;
+    private bool _canMove = true;
+    private Rigidbody2D _rigidBody;
+    private SurfaceEffector2D _surfaceEffector;
+
+    private void Start()
     {
-        private Rigidbody2D _rigidBody;
-        [SerializeField] private float _torque = 0;
-        private SurfaceEffector2D _surfaceEffector;
-        [SerializeField] ParticleSystem _moveEffect;
-        private bool _canMove = true;
+        _rigidBody = GetComponent<Rigidbody2D>();
+        _surfaceEffector = FindObjectOfType<SurfaceEffector2D>();
+        CrashDetector.Crashing += CrashDetector_Crashing;
+    }
 
-        [UsedImplicitly]
-        void Start()
+    private void CrashDetector_Crashing()
+    {
+        DisableControls();
+    }
+
+    private void Update()
+    {
+        if (!_canMove)
         {
-            _rigidBody = GetComponent<Rigidbody2D>();
-            _surfaceEffector = FindObjectOfType<SurfaceEffector2D>();
+            return;
         }
+        RotatePlayer();
+        RespondToBoost();
+    }
 
-        [UsedImplicitly]
-        void Update()
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (HasGroundTag(other))
         {
-            if (_canMove)
-            {
-                RotatePlayer();
-                RespondToBoost();
-            }
+            _moveEffect.Play();
+            Debug.Log("Touching ground");
         }
+    }
 
-        [UsedImplicitly]
-        void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (HasGroundTag(other))
         {
-            if (other.gameObject.tag == "Ground")
-            {
-                _moveEffect.Play();
-                Debug.Log("Touching ground");
-            }
+            _moveEffect.Stop();
+            Debug.Log("in the air");
         }
+    }
 
-        [UsedImplicitly]
-        void OnCollisionExit2D(Collision2D other)
+    private static bool HasGroundTag(Collision2D other)
+    {
+        return other.gameObject.CompareTag(Constants.Tags.Ground);
+    }
+
+    public void DisableControls()
+    {
+        _canMove = false;
+    }
+
+    private void RespondToBoost()
+    {
+        _surfaceEffector.speed = 15;
+        if (Input.GetKey(KeyCode.Space))
         {
-            if (other.gameObject.tag == "Ground")
-            {
-                _moveEffect.Stop();
-                Debug.Log("in the air");
-            }
+            _surfaceEffector.speed = 30;
         }
+    }
 
-        public void DisableControls()
+    private void RotatePlayer()
+    {
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
-            _canMove = false;
+            _rigidBody.AddTorque(_torque);
         }
-
-        private void RespondToBoost()
+        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
-            _surfaceEffector.speed = 15;
-            if (Input.GetKey(KeyCode.Space))
-            {
-                _surfaceEffector.speed = 30;
-            }
-        }
-
-        private void RotatePlayer()
-        {
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-            {
-                _rigidBody.AddTorque(_torque);
-            }
-            else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-            {
-                _rigidBody.AddTorque(-_torque);
-            }
+            _rigidBody.AddTorque(-_torque);
         }
     }
 }
